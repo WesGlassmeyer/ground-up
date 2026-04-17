@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Presence for Independent Gyms & Schools | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0d0d0d;
+    --white: #f5f0e8;
+    --accent: #e63329;
+    --accent-dark: #b5261e;
+    --gold: #c9a04a;
+    --gray: #1a1a1a;
+    --gray2: #252525;
+    --muted: #777;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(13,13,13,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem; letter-spacing: 4px; color: var(--white); text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.82rem; letter-spacing: 1.5px; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--accent); color: var(--white);
+    padding: 0.6rem 1.4rem; text-decoration: none;
+    font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--accent-dark); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8rem 4rem 5rem;
+    position: relative; overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 80% 40%, rgba(230,51,41,0.07) 0%, transparent 55%);
+    pointer-events: none;
+  }
+
+  .hero-label {
+    font-size: 0.72rem; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 7vw, 7rem);
+    line-height: 0.95; letter-spacing: 2px;
+    max-width: 800px; margin-bottom: 2rem;
+  }
+
+  .hero h1 em { color: var(--accent); font-style: normal; }
+
+  .hero-desc {
+    font-size: 1.1rem; line-height: 1.75; color: #999;
+    max-width: 520px; margin-bottom: 3rem;
+  }
+
+  .hero-desc strong { color: var(--white); font-weight: 500; }
+
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-red {
+    background: var(--accent); color: var(--white);
+    padding: 0.9rem 2.2rem; text-decoration: none;
+    font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 500;
+    transition: background 0.2s, transform 0.15s; display: inline-block;
+  }
+  .btn-red:hover { background: var(--accent-dark); transform: translateY(-2px); }
+
+  .btn-ghost {
+    border: 1px solid rgba(255,255,255,0.15); color: var(--white);
+    padding: 0.9rem 2.2rem; text-decoration: none;
+    font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase;
+    transition: border-color 0.2s, transform 0.15s; display: inline-block;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.5); transform: translateY(-2px); }
+
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 4rem;
+    font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--muted);
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-scroll::before {
+    content: '';
+    display: block; width: 40px; height: 1px; background: var(--muted);
+  }
+
+  /* WHAT WE DO */
+  .services { padding: 7rem 4rem; }
+
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    letter-spacing: 2px; line-height: 1; margin-bottom: 1rem;
+  }
+
+  .section-sub {
+    color: var(--muted); font-size: 1rem; line-height: 1.7;
+    max-width: 500px; margin-bottom: 4rem;
+  }
+
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .service-card {
+    background: var(--black); padding: 2.5rem;
+    border-bottom: 2px solid transparent;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .service-card:hover { background: var(--gray); border-bottom-color: var(--accent); }
+
+  .service-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem; color: rgba(230,51,41,0.12); line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .service-name {
+    font-size: 1rem; font-weight: 500; letter-spacing: 1px;
+    margin-bottom: 0.7rem; text-transform: uppercase;
+  }
+
+  .service-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.5rem; }
+
+  .service-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem; letter-spacing: 2px; color: var(--gold);
+  }
+
+  /* WORK / CASE STUDIES */
+  .work { padding: 7rem 4rem; background: var(--gray); }
+
+  .work-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+    background: rgba(255,255,255,0.03); margin-top: 4rem;
+  }
+
+  .work-card {
+    background: var(--gray); padding: 3rem;
+    position: relative; overflow: hidden;
+    transition: background 0.2s;
+  }
+  .work-card:hover { background: var(--gray2); }
+
+  .work-tag {
+    display: inline-block;
+    font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); border: 1px solid rgba(201,160,74,0.3);
+    padding: 0.25rem 0.7rem; margin-bottom: 1.5rem;
+  }
+
+  .work-city {
+    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 0.5rem;
+  }
+
+  .work-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; letter-spacing: 2px; line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .work-problem {
+    font-size: 0.88rem; color: var(--muted); line-height: 1.65;
+    margin-bottom: 1.5rem; padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .work-solution {
+    font-size: 0.88rem; color: #bbb; line-height: 1.65;
+  }
+
+  .work-solution strong { color: var(--white); font-weight: 500; }
+
+  .work-bg-text {
+    position: absolute; bottom: -1rem; right: -0.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 7rem; letter-spacing: -3px;
+    color: rgba(255,255,255,0.02); pointer-events: none; line-height: 1;
+  }
+
+  /* NICHE SECTION */
+  .niche { padding: 7rem 4rem; }
+  .niche-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+  }
+
+  .niche-text p {
+    color: var(--muted); line-height: 1.8; font-size: 0.95rem; margin-bottom: 1rem;
+  }
+  .niche-text p strong { color: var(--white); font-weight: 500; }
+
+  .niche-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .niche-stat {
+    background: var(--gray); padding: 2rem;
+    text-align: center;
+  }
+
+  .niche-stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem; color: var(--accent); line-height: 1;
+  }
+
+  .niche-stat-label {
+    font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); margin-top: 0.4rem;
+  }
+
+  /* PROCESS */
+  .process { padding: 7rem 4rem; background: var(--gray); }
+
+  .process-steps {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    margin-top: 4rem; position: relative;
+  }
+
+  .process-steps::before {
+    content: '';
+    position: absolute; top: 2rem; left: 12%; right: 12%; height: 1px;
+    background: rgba(230,51,41,0.2);
+  }
+
+  .process-step { padding: 0 1.5rem; text-align: center; position: relative; }
+
+  .step-dot {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--accent); margin: 0 auto 1.5rem;
+    position: relative; z-index: 1;
+  }
+
+  .step-title {
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 0.7rem;
+  }
+
+  .step-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* CONTACT */
+  .contact-section { padding: 8rem 4rem; text-align: center; position: relative; }
+  .contact-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(230,51,41,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .contact-section .section-title { font-size: clamp(2.5rem, 5vw, 5rem); }
+
+  .contact-section p {
+    color: var(--muted); font-size: 1.05rem; line-height: 1.7;
+    max-width: 480px; margin: 1.5rem auto 2.5rem;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--gray2); padding: 2.5rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.04); flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem; letter-spacing: 4px;
+  }
+  .footer-logo span { color: var(--accent); }
+  .footer-copy { font-size: 0.75rem; color: var(--muted); letter-spacing: 1px; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-label { animation: fadeUp 0.7s ease 0.1s both; }
+  .hero h1 { animation: fadeUp 0.7s ease 0.25s both; }
+  .hero-desc { animation: fadeUp 0.7s ease 0.4s both; }
+  .hero-actions { animation: fadeUp 0.7s ease 0.55s both; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    nav .nav-links { display: none; }
+    .hero, .services, .work, .niche, .process, .contact-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .hero { padding-top: 7rem; }
+    .services-grid, .work-grid { grid-template-columns: 1fr; }
+    .niche-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .process-steps::before { display: none; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">GROUND<span>UP</span> WEB</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact" class="nav-cta">Get a Free Audit</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">Web & Google Presence for Independent Gyms</div>
+  <h1>YOUR GYM<br>DESERVES TO<br>BE <em>FOUND.</em></h1>
+  <p class="hero-desc">
+    We build clean, fast websites and fix Google listings for <strong>BJJ schools, martial arts academies, and independent gyms</strong> in tourist destinations around the world.
+    <br><br>Flat fees. Fast turnaround. No tech headaches.
+  </p>
+  <div class="hero-actions">
+    <a href="#work" class="btn-red">See Our Work</a>
+    <a href="#contact" class="btn-ghost">Get a Free Audit</a>
+  </div>
+  <div class="hero-scroll">Scroll to explore</div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="services">
+  <div class="section-label">What We Do</div>
+  <h2 class="section-title">THREE THINGS.<br>DONE RIGHT.</h2>
+  <p class="section-sub">No bloated packages. No monthly retainers you don't need. Just the stuff that actually brings students through your door.</p>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-name">Website Build</div>
+      <p class="service-desc">A fast, mobile-friendly 3–5 page site. Your story, your schedule, your contact info — clear and professional. Built to attract both locals and traveling practitioners.</p>
+      <div class="service-price">$400 – $600</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-name">Google Listing Cleanup</div>
+      <p class="service-desc">Fix wrong hours, add photos, write a proper description, and make sure you show up when someone searches "BJJ near me" or "martial arts [your city]."</p>
+      <div class="service-price">$150 – $250</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-name">Monthly Maintenance</div>
+      <p class="service-desc">Fresh photos, Google posts, review monitoring, and listing updates. Keeps your presence active without you thinking about it.</p>
+      <div class="service-price">$75 – $150/mo</div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work" class="work">
+  <div class="section-label">Case Studies</div>
+  <h2 class="section-title">THE PROBLEM<br>IS ALWAYS<br>THE SAME.</h2>
+
+  <div class="work-grid">
+
+    <!-- BJJ Saranda -->
+    <div class="work-card">
+      <div class="work-tag">Completed</div>
+      <div class="work-city">Sarandë, Albania</div>
+      <div class="work-name">BJJ SARANDA<br>ALBANIA</div>
+      <p class="work-problem">Albania's first BJJ Black Belt — certified by Gracie Barra, 20+ years teaching — had a WordPress blog with default placeholder posts and no Google presence. Invisible to thousands of tourists visiting Saranda each season.</p>
+      <p class="work-solution">Built a full site telling his story in English for the first time. <strong>Drop-in visitor page</strong> specifically targeting traveling practitioners. Google Business Profile created from scratch with correct address, hours, and photos.</p>
+      <div class="work-bg-text">ALB</div>
+    </div>
+
+    <!-- Kotor BJJ -->
+    <div class="work-card">
+      <div class="work-tag">Prospect</div>
+      <div class="work-city">Kotor, Montenegro</div>
+      <div class="work-name">MATA LEAO<br>KOTOR</div>
+      <p class="work-problem">Kotor is one of the most-visited walled cities in the Adriatic — a UNESCO World Heritage site with over a million tourists a year. The local BJJ club competes nationally but has zero English web presence and no standalone site.</p>
+      <p class="work-solution">Opportunity to build a site that captures the unique "train inside a medieval walled city" angle. <strong>A story that sells itself</strong> to the international BJJ travel community with zero paid advertising required.</p>
+      <div class="work-bg-text">MNE</div>
+    </div>
+
+    <!-- Hvar -->
+    <div class="work-card">
+      <div class="work-tag">Prospect</div>
+      <div class="work-city">Hvar Island, Croatia</div>
+      <div class="work-name">NO GYM<br>ON HVAR</div>
+      <p class="work-problem">Hvar is one of the most glamorous islands in Europe — visited by celebrities, yacht travelers, and thousands of English-speaking tourists every summer. Confirmed: there is currently no BJJ school on the island at all.</p>
+      <p class="work-solution">First-mover opportunity. Any instructor willing to run seasonal classes on Hvar would have zero competition for the "BJJ Hvar" search term. <strong>The website would exist before the gym fully does.</strong></p>
+      <div class="work-bg-text">CRO</div>
+    </div>
+
+    <!-- Dubrovnik -->
+    <div class="work-card">
+      <div class="work-tag">Prospect</div>
+      <div class="work-city">Dubrovnik, Croatia</div>
+      <div class="work-name">DUBROVNIK<br>MMA / BJJ</div>
+      <p class="work-problem">Dubrovnik gets over 1.5 million tourists per year. BJJ practitioners actively search for drop-in gyms when traveling — and Dubrovnik consistently comes up in BJJ travel forums as a city where "nothing came up" in searches.</p>
+      <p class="work-solution">Any existing MMA or BJJ school here that adds a proper English-language website with a "visiting practitioners" page owns that search traffic completely. <strong>No competition. Massive audience.</strong></p>
+      <div class="work-bg-text">DUB</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- NICHE -->
+<section id="niche" class="niche">
+  <div class="niche-inner">
+    <div class="niche-text">
+      <div class="section-label">Why This Niche</div>
+      <h2 class="section-title">BJJ GYMS IN<br>TOURIST TOWNS</h2>
+      <p>Brazilian Jiu-Jitsu practitioners are <strong>obsessive about training when they travel</strong>. They Google "BJJ [city name]" before every trip. If your school isn't showing up, those drop-in fees and word-of-mouth referrals are going to whoever is.</p>
+      <p>Most of these schools are run by one dedicated instructor who is <strong>brilliant on the mat and invisible on the internet.</strong> That's the gap we fill.</p>
+      <p>Tourist cities in the Adriatic, Mediterranean, Southeast Asia, and Latin America are full of gyms like this — great coaches, loyal local students, and <strong>almost no digital footprint.</strong></p>
+    </div>
+
+    <div class="niche-stats">
+      <div class="niche-stat">
+        <div class="niche-stat-num">10M+</div>
+        <div class="niche-stat-label">BJJ Practitioners Worldwide</div>
+      </div>
+      <div class="niche-stat">
+        <div class="niche-stat-num">$0</div>
+        <div class="niche-stat-label">Ad Spend Needed</div>
+      </div>
+      <div class="niche-stat">
+        <div class="niche-stat-num">72%</div>
+        <div class="niche-stat-label">Search Before Traveling</div>
+      </div>
+      <div class="niche-stat">
+        <div class="niche-stat-num">48hr</div>
+        <div class="niche-stat-label">Avg. Site Delivery</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="process">
+  <div class="section-label">How It Works</div>
+  <h2 class="section-title">SIMPLE.<br>FAST. DONE.</h2>
+
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="step-dot"></div>
+      <div class="step-title">Free Audit</div>
+      <p class="step-desc">We find your school online and tell you exactly what's broken and what it's costing you in drop-ins and new students.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-dot"></div>
+      <div class="step-title">Agree & Deposit</div>
+      <p class="step-desc">Flat fee, clear scope, 50% to start. No surprises. We collect your basic info and any photos you want to use.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-dot"></div>
+      <div class="step-title">We Build</div>
+      <p class="step-desc">Site draft delivered within 48–72 hours. One round of revisions included. Google listing fixed simultaneously.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-dot"></div>
+      <div class="step-title">You're Live</div>
+      <p class="step-desc">Final payment, site goes live. Optional monthly maintenance from there. You get back to teaching.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="section-label">Ready?</div>
+  <h2 class="section-title">GET YOUR<br>FREE AUDIT</h2>
+  <p>Tell us your gym name and city. We'll come back within 24 hours with a clear breakdown of what's missing and what it would cost to fix it. No pitch, no pressure.</p>
+  <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+    <a href="mailto:hello@groundupweb.com" class="btn-red">Email Us</a>
+    <a href="#work" class="btn-ghost">See More Work</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">GROUND<span>UP</span> WEB</div>
+  <div class="footer-copy">© 2025 · Websites & Google Presence for Independent Gyms</div>
+</footer>
+
+</body>
+</html>
+
