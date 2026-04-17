@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Digital Presence for Independent Gyms & Schools | Portfolio</title>
+<title>GroundUp Web | Websites & Google Presence for Independent Gyms</title>
+<meta name="description" content="We build clean, fast websites and fix Google listings for BJJ schools and martial arts gyms in tourist destinations. Flat fees, fast turnaround.">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -124,7 +125,7 @@
     display: block; width: 40px; height: 1px; background: var(--muted);
   }
 
-  /* WHAT WE DO */
+  /* SERVICES */
   .services { padding: 7rem 4rem; }
 
   .section-label {
@@ -157,8 +158,7 @@
 
   .service-num {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 3rem; color: rgba(230,51,41,0.12); line-height: 1;
-    margin-bottom: 1rem;
+    font-size: 3rem; color: rgba(230,51,41,0.12); line-height: 1; margin-bottom: 1rem;
   }
 
   .service-name {
@@ -173,7 +173,7 @@
     font-size: 1.4rem; letter-spacing: 2px; color: var(--gold);
   }
 
-  /* WORK / CASE STUDIES */
+  /* WORK */
   .work { padding: 7rem 4rem; background: var(--gray); }
 
   .work-grid {
@@ -185,15 +185,33 @@
     background: var(--gray); padding: 3rem;
     position: relative; overflow: hidden;
     transition: background 0.2s;
+    text-decoration: none; color: inherit;
+    display: block;
   }
   .work-card:hover { background: var(--gray2); }
+
+  .work-card-inner { position: relative; z-index: 1; }
+
+  .work-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
 
   .work-tag {
     display: inline-block;
     font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
     color: var(--gold); border: 1px solid rgba(201,160,74,0.3);
-    padding: 0.25rem 0.7rem; margin-bottom: 1.5rem;
+    padding: 0.25rem 0.7rem;
   }
+
+  .work-link-hint {
+    font-size: 0.72rem; letter-spacing: 1px; color: var(--muted);
+    display: flex; align-items: center; gap: 0.4rem;
+    transition: color 0.2s;
+  }
+  .work-card:hover .work-link-hint { color: var(--accent); }
+  .work-link-arrow { font-size: 0.9rem; transition: transform 0.2s; }
+  .work-card:hover .work-link-arrow { transform: translateX(3px); }
 
   .work-city {
     font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
@@ -202,8 +220,7 @@
 
   .work-name {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem; letter-spacing: 2px; line-height: 1;
-    margin-bottom: 1rem;
+    font-size: 2rem; letter-spacing: 2px; line-height: 1; margin-bottom: 1rem;
   }
 
   .work-problem {
@@ -215,7 +232,6 @@
   .work-solution {
     font-size: 0.88rem; color: #bbb; line-height: 1.65;
   }
-
   .work-solution strong { color: var(--white); font-weight: 500; }
 
   .work-bg-text {
@@ -223,9 +239,10 @@
     font-family: 'Bebas Neue', sans-serif;
     font-size: 7rem; letter-spacing: -3px;
     color: rgba(255,255,255,0.02); pointer-events: none; line-height: 1;
+    z-index: 0;
   }
 
-  /* NICHE SECTION */
+  /* NICHE */
   .niche { padding: 7rem 4rem; }
   .niche-inner {
     display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
@@ -241,10 +258,7 @@
     background: rgba(255,255,255,0.04);
   }
 
-  .niche-stat {
-    background: var(--gray); padding: 2rem;
-    text-align: center;
-  }
+  .niche-stat { background: var(--gray); padding: 2rem; text-align: center; }
 
   .niche-stat-num {
     font-family: 'Bebas Neue', sans-serif;
@@ -274,8 +288,7 @@
 
   .step-dot {
     width: 16px; height: 16px; border-radius: 50%;
-    background: var(--accent); margin: 0 auto 1.5rem;
-    position: relative; z-index: 1;
+    background: var(--accent); margin: 0 auto 1.5rem; position: relative; z-index: 1;
   }
 
   .step-title {
@@ -285,8 +298,8 @@
 
   .step-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
 
-  /* CONTACT */
-  .contact-section { padding: 8rem 4rem; text-align: center; position: relative; }
+  /* CONTACT / FORM */
+  .contact-section { padding: 8rem 4rem; position: relative; }
   .contact-section::before {
     content: '';
     position: absolute; inset: 0;
@@ -294,12 +307,112 @@
     pointer-events: none;
   }
 
-  .contact-section .section-title { font-size: clamp(2.5rem, 5vw, 5rem); }
-
-  .contact-section p {
-    color: var(--muted); font-size: 1.05rem; line-height: 1.7;
-    max-width: 480px; margin: 1.5rem auto 2.5rem;
+  .contact-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start;
+    position: relative; z-index: 1;
   }
+
+  .contact-text .section-title { font-size: clamp(2.2rem, 4vw, 3.8rem); }
+
+  .contact-text p {
+    color: var(--muted); font-size: 1rem; line-height: 1.75; margin-top: 1.5rem;
+  }
+
+  .contact-text p strong { color: var(--white); font-weight: 500; }
+
+  .contact-promise {
+    margin-top: 2.5rem;
+    display: flex; flex-direction: column; gap: 0.8rem;
+  }
+
+  .promise-item {
+    display: flex; align-items: center; gap: 0.8rem;
+    font-size: 0.85rem; color: #aaa;
+  }
+
+  .promise-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0;
+  }
+
+  /* FORM */
+  .audit-form {
+    background: var(--gray); padding: 2.5rem;
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .form-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; letter-spacing: 2px; margin-bottom: 0.5rem;
+  }
+
+  .form-subtitle {
+    font-size: 0.82rem; color: var(--muted); margin-bottom: 2rem; line-height: 1.5;
+  }
+
+  .form-group { margin-bottom: 1.2rem; }
+
+  .form-group label {
+    display: block; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 0.5rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: var(--black);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--white);
+    padding: 0.8rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--accent);
+  }
+
+  .form-group select option { background: var(--black); }
+
+  .form-group textarea { resize: vertical; min-height: 90px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .form-submit {
+    width: 100%;
+    background: var(--accent); color: var(--white);
+    border: none; cursor: pointer;
+    padding: 1rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 500;
+    transition: background 0.2s, transform 0.15s;
+    margin-top: 0.5rem;
+  }
+  .form-submit:hover { background: var(--accent-dark); transform: translateY(-1px); }
+
+  .form-note {
+    font-size: 0.75rem; color: var(--muted); margin-top: 1rem;
+    text-align: center; line-height: 1.5;
+  }
+
+  /* SUCCESS STATE */
+  .form-success {
+    display: none; text-align: center; padding: 3rem 2rem;
+  }
+  .form-success.visible { display: block; }
+  .form-success-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .form-success h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; letter-spacing: 2px; margin-bottom: 0.8rem;
+  }
+  .form-success p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
 
   /* FOOTER */
   footer {
@@ -308,8 +421,7 @@
     border-top: 1px solid rgba(255,255,255,0.04); flex-wrap: wrap; gap: 1rem;
   }
   .footer-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.2rem; letter-spacing: 4px;
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 4px;
   }
   .footer-logo span { color: var(--accent); }
   .footer-copy { font-size: 0.75rem; color: var(--muted); letter-spacing: 1px; }
@@ -334,6 +446,8 @@
     .niche-inner { grid-template-columns: 1fr; gap: 3rem; }
     .process-steps { grid-template-columns: 1fr 1fr; }
     .process-steps::before { display: none; }
+    .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .form-row { grid-template-columns: 1fr; }
     footer { padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
   }
 </style>
@@ -354,7 +468,7 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-label">Web & Google Presence for Independent Gyms</div>
-  <h1>YOUR GYM<br>DESERVES TO<br>BE <em>FOUND.</em></h1>
+  <h1>WE PUT<br>GYMS <em>ON</em><br>THE MAP.</h1>
   <p class="hero-desc">
     We build clean, fast websites and fix Google listings for <strong>BJJ schools, martial arts academies, and independent gyms</strong> in tourist destinations around the world.
     <br><br>Flat fees. Fast turnaround. No tech headaches.
@@ -396,50 +510,66 @@
 
 <!-- WORK -->
 <section id="work" class="work">
-  <div class="section-label">Case Studies</div>
+  <div class="section-label">Demo Sites</div>
   <h2 class="section-title">THE PROBLEM<br>IS ALWAYS<br>THE SAME.</h2>
 
   <div class="work-grid">
 
-    <!-- BJJ Saranda -->
-    <div class="work-card">
-      <div class="work-tag">Completed</div>
-      <div class="work-city">Sarandë, Albania</div>
-      <div class="work-name">BJJ SARANDA<br>ALBANIA</div>
-      <p class="work-problem">Albania's first BJJ Black Belt — certified by Gracie Barra, 20+ years teaching — had a WordPress blog with default placeholder posts and no Google presence. Invisible to thousands of tourists visiting Saranda each season.</p>
-      <p class="work-solution">Built a full site telling his story in English for the first time. <strong>Drop-in visitor page</strong> specifically targeting traveling practitioners. Google Business Profile created from scratch with correct address, hours, and photos.</p>
+    <a class="work-card" href="examples/bjj-saranda.html" target="_blank">
+      <div class="work-card-inner">
+        <div class="work-header">
+          <div class="work-tag">Demo</div>
+          <div class="work-link-hint">View Site <span class="work-link-arrow">→</span></div>
+        </div>
+        <div class="work-city">Sarandë, Albania · Mediterranean</div>
+        <div class="work-name">BJJ SARANDA<br>ALBANIA</div>
+        <p class="work-problem">Albania's first BJJ Black Belt — certified by Gracie Barra, 20+ years teaching — had no English web presence. Invisible to thousands of tourists visiting Saranda each season.</p>
+        <p class="work-solution">Full site in English telling his story for the first time. <strong>Drop-in visitor page</strong> targeting traveling practitioners. Google Business Profile built from scratch.</p>
+      </div>
       <div class="work-bg-text">ALB</div>
-    </div>
+    </a>
 
-    <!-- Kotor BJJ -->
-    <div class="work-card">
-      <div class="work-tag">Prospect</div>
-      <div class="work-city">Kotor, Montenegro</div>
-      <div class="work-name">MATA LEAO<br>KOTOR</div>
-      <p class="work-problem">Kotor is one of the most-visited walled cities in the Adriatic — a UNESCO World Heritage site with over a million tourists a year. The local BJJ club competes nationally but has zero English web presence and no standalone site.</p>
-      <p class="work-solution">Opportunity to build a site that captures the unique "train inside a medieval walled city" angle. <strong>A story that sells itself</strong> to the international BJJ travel community with zero paid advertising required.</p>
-      <div class="work-bg-text">MNE</div>
-    </div>
+    <a class="work-card" href="examples/bjj-canggu.html" target="_blank">
+      <div class="work-card-inner">
+        <div class="work-header">
+          <div class="work-tag">Demo</div>
+          <div class="work-link-hint">View Site <span class="work-link-arrow">→</span></div>
+        </div>
+        <div class="work-city">Canggu, Bali · Southeast Asia</div>
+        <div class="work-name">CANGGU BJJ<br>BALI</div>
+        <p class="work-problem">A decade-old school in one of Asia's most visited surf towns — no standalone website, invisible to the thousands of traveling practitioners flowing through Canggu every month.</p>
+        <p class="work-solution">Clean English site built around the <strong>drop-in and digital nomad audience</strong>. Class schedule, coach credentials, and a frictionless visitor page front and center.</p>
+      </div>
+      <div class="work-bg-text">BAL</div>
+    </a>
 
-    <!-- Hvar -->
-    <div class="work-card">
-      <div class="work-tag">Prospect</div>
-      <div class="work-city">Hvar Island, Croatia</div>
-      <div class="work-name">NO GYM<br>ON HVAR</div>
-      <p class="work-problem">Hvar is one of the most glamorous islands in Europe — visited by celebrities, yacht travelers, and thousands of English-speaking tourists every summer. Confirmed: there is currently no BJJ school on the island at all.</p>
-      <p class="work-solution">First-mover opportunity. Any instructor willing to run seasonal classes on Hvar would have zero competition for the "BJJ Hvar" search term. <strong>The website would exist before the gym fully does.</strong></p>
-      <div class="work-bg-text">CRO</div>
-    </div>
+    <a class="work-card" href="examples/bjj-medellin.html" target="_blank">
+      <div class="work-card-inner">
+        <div class="work-header">
+          <div class="work-tag">Demo</div>
+          <div class="work-link-hint">View Site <span class="work-link-arrow">→</span></div>
+        </div>
+        <div class="work-city">El Poblado, Medellín · Latin America</div>
+        <div class="work-name">ACADEMIA BJJ<br>MEDELLÍN</div>
+        <p class="work-problem">A nationally decorated black belt running a serious academy in one of South America's fastest-growing tourist cities — found only by locals who already knew the name.</p>
+        <p class="work-solution">Bilingual site (Spanish + English) that captures the <strong>international nomad and backpacker audience</strong> pouring into El Poblado. Competitor credentials front and center.</p>
+      </div>
+      <div class="work-bg-text">COL</div>
+    </a>
 
-    <!-- Dubrovnik -->
-    <div class="work-card">
-      <div class="work-tag">Prospect</div>
-      <div class="work-city">Dubrovnik, Croatia</div>
-      <div class="work-name">DUBROVNIK<br>MMA / BJJ</div>
-      <p class="work-problem">Dubrovnik gets over 1.5 million tourists per year. BJJ practitioners actively search for drop-in gyms when traveling — and Dubrovnik consistently comes up in BJJ travel forums as a city where "nothing came up" in searches.</p>
-      <p class="work-solution">Any existing MMA or BJJ school here that adds a proper English-language website with a "visiting practitioners" page owns that search traffic completely. <strong>No competition. Massive audience.</strong></p>
-      <div class="work-bg-text">DUB</div>
-    </div>
+    <a class="work-card" href="examples/bjj-lisbon.html" target="_blank">
+      <div class="work-card-inner">
+        <div class="work-header">
+          <div class="work-tag">Demo</div>
+          <div class="work-link-hint">View Site <span class="work-link-arrow">→</span></div>
+        </div>
+        <div class="work-city">Alfama, Lisbon · Europe</div>
+        <div class="work-name">ALFAMA BJJ<br>LISBON</div>
+        <p class="work-problem">A two-time national champion teaching out of Lisbon's most historic neighborhood — with no English website in one of Europe's most popular destinations for expats and long-stay travelers.</p>
+        <p class="work-solution">English-first site designed for the <strong>European expat and remote worker crowd</strong>. Drop-in pricing in euros, loaner gi info, and a visitor flow built for people who plan ahead.</p>
+      </div>
+      <div class="work-bg-text">LIS</div>
+    </a>
 
   </div>
 </section>
@@ -469,8 +599,8 @@
         <div class="niche-stat-label">Search Before Traveling</div>
       </div>
       <div class="niche-stat">
-        <div class="niche-stat-num">48hr</div>
-        <div class="niche-stat-label">Avg. Site Delivery</div>
+        <div class="niche-stat-num">4</div>
+        <div class="niche-stat-label">Regions Covered</div>
       </div>
     </div>
   </div>
@@ -495,7 +625,7 @@
     <div class="process-step">
       <div class="step-dot"></div>
       <div class="step-title">We Build</div>
-      <p class="step-desc">Site draft delivered within 48–72 hours. One round of revisions included. Google listing fixed simultaneously.</p>
+      <p class="step-desc">Site draft delivered within one week. One round of revisions included. Google listing fixed simultaneously.</p>
     </div>
     <div class="process-step">
       <div class="step-dot"></div>
@@ -507,21 +637,114 @@
 
 <!-- CONTACT -->
 <section id="contact" class="contact-section">
-  <div class="section-label">Ready?</div>
-  <h2 class="section-title">GET YOUR<br>FREE AUDIT</h2>
-  <p>Tell us your gym name and city. We'll come back within 24 hours with a clear breakdown of what's missing and what it would cost to fix it. No pitch, no pressure.</p>
-  <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
-    <a href="mailto:hello@groundupweb.com" class="btn-red">Email Us</a>
-    <a href="#work" class="btn-ghost">See More Work</a>
+  <div class="contact-inner">
+
+    <div class="contact-text">
+      <div class="section-label">Get Started</div>
+      <h2 class="section-title">GET YOUR<br>FREE AUDIT</h2>
+      <p>Tell us your gym name and city. We'll come back within <strong>24 hours</strong> with a clear breakdown of what's missing and what it would cost to fix it.</p>
+      <p style="margin-top:0.8rem;">No pitch. No pressure. Just an honest look at your digital presence.</p>
+
+      <div class="contact-promise">
+        <div class="promise-item">
+          <div class="promise-dot"></div>
+          Response within 24 hours
+        </div>
+        <div class="promise-item">
+          <div class="promise-dot"></div>
+          Specific to your gym — not a generic report
+        </div>
+        <div class="promise-item">
+          <div class="promise-dot"></div>
+          No obligation to proceed
+        </div>
+        <div class="promise-item">
+          <div class="promise-dot"></div>
+          Flat fees, no hidden costs
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="audit-form">
+        <div class="form-title">REQUEST AUDIT</div>
+        <div class="form-subtitle">Takes 60 seconds. We'll handle the rest.</div>
+
+        <form name="audit-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="auditForm">
+          <input type="hidden" name="form-name" value="audit-request">
+          <p style="display:none;"><input name="bot-field"></p>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" placeholder="Dorian Lapaj" required>
+            </div>
+            <div class="form-group">
+              <label for="gym">Gym Name</label>
+              <input type="text" id="gym" name="gym" placeholder="BJJ Saranda" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="city">City & Country</label>
+            <input type="text" id="city" name="city" placeholder="Sarandë, Albania" required>
+          </div>
+
+          <div class="form-group">
+            <label for="contact">Best Way to Reach You</label>
+            <input type="text" id="contact" name="contact" placeholder="Email, WhatsApp, or Instagram" required>
+          </div>
+
+          <div class="form-group">
+            <label for="situation">Current Situation (optional)</label>
+            <textarea id="situation" name="situation" placeholder="e.g. We have a Facebook page but no website. We get a lot of tourist visitors but they find us by word of mouth only."></textarea>
+          </div>
+
+          <button type="submit" class="form-submit">Send My Audit Request →</button>
+          <p class="form-note">We respond within 24 hours. No spam, ever.</p>
+        </form>
+
+        <div class="form-success" id="formSuccess">
+          <div class="form-success-icon">✅</div>
+          <h3>REQUEST RECEIVED</h3>
+          <p>We'll have your audit back within 24 hours. Keep an eye on your inbox — or wherever you told us to reach you.</p>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">GROUND<span>UP</span> WEB</div>
-  <div class="footer-copy">© 2025 · Websites & Google Presence for Independent Gyms</div>
+  <div class="footer-copy">© 2026 · Websites & Google Presence for Independent Gyms</div>
 </footer>
+
+<script>
+  // Netlify form success handling
+  const form = document.getElementById('auditForm');
+  const success = document.getElementById('formSuccess');
+
+  if (form) {
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const data = new FormData(form);
+      try {
+        await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(data).toString()
+        });
+        form.style.display = 'none';
+        success.classList.add('visible');
+      } catch (err) {
+        // Fallback — let native form submission handle it
+        form.submit();
+      }
+    });
+  }
+</script>
 
 </body>
 </html>
-
