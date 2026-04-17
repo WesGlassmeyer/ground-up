@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academia BJJ Medellín | Train in Colombia | Prof. Sebastián Ríos</title>
+<meta name="description" content="Train Brazilian Jiu-Jitsu in Medellín, Colombia with Prof. Sebastián Ríos. Drop-ins welcome. El Poblado's premier BJJ academy. All levels, gi and no-gi.">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0c0a08;
+    --white: #f0ebe2;
+    --amber: #d47c1a;
+    --amber-dark: #a8600f;
+    --amber-glow: rgba(212,124,26,0.1);
+    --gold: #c9a04a;
+    --gray: #171410;
+    --gray-mid: #201c17;
+    --text-muted: #7a6e5e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Syne', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(12,10,8,0.94);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212,124,26,0.2);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem; letter-spacing: 3px;
+    color: var(--white); text-decoration: none;
+  }
+  .nav-logo span { color: var(--amber); }
+
+  nav ul { list-style: none; display: flex; gap: 2.5rem; }
+  nav ul a {
+    color: var(--text-muted); text-decoration: none;
+    font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  nav ul a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--amber); color: var(--white) !important;
+    padding: 0.5rem 1.2rem; font-weight: 500 !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--amber-dark) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 3rem 4rem;
+    position: relative; overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 70% 45%, rgba(212,124,26,0.1) 0%, transparent 55%),
+      radial-gradient(ellipse at 10% 90%, rgba(212,124,26,0.04) 0%, transparent 40%),
+      repeating-linear-gradient(
+        45deg, transparent, transparent 40px,
+        rgba(212,124,26,0.015) 40px, rgba(212,124,26,0.015) 41px
+      );
+    pointer-events: none;
+  }
+
+  .hero-text { position: relative; z-index: 2; }
+
+  .hero-eyebrow {
+    font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.2rem;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.8rem, 8vw, 6.8rem);
+    line-height: 0.95; letter-spacing: 2px; margin-bottom: 1.5rem;
+  }
+  .hero h1 .line-amber { color: var(--amber); }
+
+  .hero-sub {
+    font-size: 1.02rem; line-height: 1.78; color: #8a7d6a;
+    max-width: 440px; margin-bottom: 2.5rem;
+  }
+  .hero-sub strong { color: var(--white); font-weight: 500; }
+
+  .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--amber); color: var(--white);
+    padding: 0.9rem 2rem; text-decoration: none;
+    font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 500;
+    transition: background 0.2s, transform 0.2s; display: inline-block;
+  }
+  .btn-primary:hover { background: var(--amber-dark); transform: translateY(-2px); }
+
+  .btn-secondary {
+    border: 1px solid rgba(255,255,255,0.15); color: var(--white);
+    padding: 0.9rem 2rem; text-decoration: none;
+    font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+    transition: border-color 0.2s, transform 0.2s; display: inline-block;
+  }
+  .btn-secondary:hover { border-color: var(--amber); transform: translateY(-2px); }
+
+  /* HERO VISUAL */
+  .hero-visual {
+    position: relative; z-index: 2;
+    display: flex; justify-content: center; align-items: center;
+  }
+
+  .hero-badge {
+    width: 310px; height: 310px;
+    border: 1px solid rgba(212,124,26,0.3);
+    border-radius: 50%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    background: radial-gradient(circle, rgba(212,124,26,0.06) 0%, transparent 70%);
+    animation: pulse-ring 3.5s ease-in-out infinite;
+    position: relative;
+  }
+
+  @keyframes pulse-ring {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(212,124,26,0.12); }
+    50% { box-shadow: 0 0 0 22px rgba(212,124,26,0); }
+  }
+
+  .hero-badge::before {
+    content: '';
+    position: absolute; inset: 12px;
+    border: 1px solid rgba(196,168,79,0.18);
+    border-radius: 50%;
+  }
+
+  .badge-flag { font-size: 2.8rem; margin-bottom: 0.5rem; }
+  .badge-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.88rem; letter-spacing: 3px; color: var(--gold); margin-bottom: 0.3rem;
+  }
+  .badge-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.65rem; letter-spacing: 2px; line-height: 1.05; margin-bottom: 0.4rem;
+  }
+  .badge-sub {
+    font-size: 0.66rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted);
+  }
+  .badge-belt { margin-top: 1rem; display: flex; gap: 4px; align-items: center; }
+  .belt-stripe { width: 28px; height: 6px; border-radius: 2px; }
+  .belt-stripe.black { background: #1a1a1a; border: 1px solid #333; }
+  .belt-stripe.amber { background: var(--amber); }
+
+  /* STATS */
+  .stats-bar {
+    background: var(--gray);
+    padding: 2rem 3rem;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid rgba(212,124,26,0.15);
+    border-bottom: 1px solid rgba(212,124,26,0.15);
+  }
+
+  .stat { text-align: center; padding: 0 1rem; border-right: 1px solid rgba(255,255,255,0.04); }
+  .stat:last-child { border-right: none; }
+  .stat-number { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; color: var(--amber); line-height: 1; }
+  .stat-label { font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-top: 0.3rem; }
+
+  /* SECTIONS */
+  section { padding: 6rem 3rem; }
+
+  .section-eyebrow {
+    font-size: 0.68rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--amber); margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: 2px; line-height: 1; margin-bottom: 1.5rem;
+  }
+
+  /* ABOUT */
+  .about { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+
+  .about-text p { color: #8a7d6a; line-height: 1.8; margin-bottom: 1.2rem; font-size: 0.97rem; }
+  .about-text p strong { color: var(--white); font-weight: 500; }
+
+  .credentials { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+
+  .credential {
+    display: flex; align-items: flex-start; gap: 1rem; padding: 1rem;
+    background: var(--gray); border-left: 2px solid var(--amber);
+  }
+  .credential-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .credential-text { font-size: 0.83rem; color: #8a7d6a; line-height: 1.5; }
+  .credential-text strong { display: block; color: var(--white); font-size: 0.87rem; margin-bottom: 0.2rem; font-weight: 500; }
+
+  .about-card {
+    background: var(--gray); border: 1px solid rgba(255,255,255,0.04);
+    padding: 3rem; position: relative; overflow: hidden;
+  }
+  .about-card::before {
+    content: 'BJJ';
+    position: absolute; font-family: 'Bebas Neue', sans-serif;
+    font-size: 10rem; color: rgba(212,124,26,0.04);
+    right: -1rem; bottom: -1rem; letter-spacing: -5px; pointer-events: none;
+  }
+
+  .quote-mark { font-family: 'Bebas Neue', sans-serif; font-size: 5rem; color: var(--amber); line-height: 0.5; margin-bottom: 1rem; opacity: 0.5; }
+  .quote-text { font-size: 1.05rem; font-style: italic; color: var(--white); line-height: 1.75; margin-bottom: 1.5rem; }
+  .quote-author { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); }
+
+  /* CLASSES */
+  .classes-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: rgba(255,255,255,0.04); margin-top: 3rem;
+  }
+
+  .class-card {
+    background: var(--black); padding: 2.5rem;
+    transition: background 0.2s; cursor: default;
+  }
+  .class-card:hover { background: var(--gray); }
+
+  .class-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .class-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 2px; margin-bottom: 0.5rem; }
+  .class-desc { font-size: 0.87rem; color: #6a5e50; line-height: 1.6; margin-bottom: 1.5rem; }
+
+  .class-schedule { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem; }
+  .schedule-row { display: flex; justify-content: space-between; font-size: 0.77rem; padding: 0.3rem 0; color: #5a4e40; }
+  .schedule-row span:last-child { color: var(--white); }
+
+  /* VISITORS */
+  .visitors {
+    background: var(--gray);
+    border-top: 1px solid rgba(212,124,26,0.12);
+    border-bottom: 1px solid rgba(212,124,26,0.12);
+  }
+
+  .visitors-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+  .visitors-text p { color: #8a7d6a; line-height: 1.8; margin-bottom: 1rem; }
+
+  .visitor-steps { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
+  .visitor-step { display: flex; gap: 1.5rem; align-items: flex-start; }
+
+  .step-number {
+    font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem;
+    color: var(--amber); line-height: 1; flex-shrink: 0; width: 2rem; opacity: 0.45;
+  }
+  .step-content strong { display: block; margin-bottom: 0.3rem; font-weight: 500; }
+  .step-content p { font-size: 0.87rem; color: #5a4e40; line-height: 1.5; margin: 0 !important; }
+
+  .location-card {
+    background: var(--black); padding: 2.5rem;
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+  .location-label { font-size: 0.67rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+  .location-detail { display: flex; gap: 1rem; margin-bottom: 1.2rem; align-items: flex-start; }
+  .location-detail-icon { font-size: 1.1rem; flex-shrink: 0; }
+  .location-detail-text { font-size: 0.87rem; color: #8a7d6a; line-height: 1.5; }
+  .location-detail-text strong { display: block; color: var(--white); font-weight: 500; margin-bottom: 0.2rem; }
+
+  .map-placeholder {
+    margin-top: 1.5rem; background: var(--gray-mid); height: 140px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.77rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-muted); border: 1px dashed rgba(255,255,255,0.05);
+  }
+
+  /* CTA */
+  .cta-section {
+    text-align: center; padding: 8rem 3rem;
+    position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(212,124,26,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cta-section .section-title { font-size: clamp(3rem, 6vw, 5rem); }
+  .cta-section p { color: #7a6e5e; font-size: 1.02rem; max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.75; }
+
+  /* FOOTER */
+  footer {
+    background: var(--gray); padding: 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 3px; }
+  .footer-logo span { color: var(--amber); }
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+  .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.77rem; letter-spacing: 1px; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--white); }
+  .footer-copy { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 1px; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-text > * { animation: fadeUp 0.8s ease forwards; opacity: 0; }
+  .hero-eyebrow { animation-delay: 0.1s; }
+  .hero h1 { animation-delay: 0.25s; }
+  .hero-sub { animation-delay: 0.4s; }
+  .hero-buttons { animation-delay: 0.55s; }
+  .hero-visual { animation: fadeUp 1s ease 0.3s forwards; opacity: 0; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 3rem; }
+    .hero-visual { order: -1; }
+    .hero-badge { width: 220px; height: 220px; }
+    .badge-name { font-size: 1.3rem; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); padding: 2rem 1.5rem; gap: 1.5rem; }
+    .stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.04); padding-bottom: 1.5rem; }
+    .stat:nth-child(3), .stat:last-child { border-bottom: none; }
+    section { padding: 4rem 1.5rem; }
+    .about, .visitors-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .classes-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">ACADEMIA <span>BJJ</span></a>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#classes">Classes</a></li>
+    <li><a href="#visitors">Visitors</a></li>
+    <li><a href="#contact" class="nav-cta">Train With Us</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">El Poblado · Medellín · Colombia · Est. 2011</div>
+    <h1>JITSU EN<br><span class="line-amber">LA CIUDAD</span><br>ETERNA</h1>
+    <p class="hero-sub">
+      Train with <strong>Prof. Sebastián Ríos</strong> — Medellín's most decorated BJJ black belt — in the heart of El Poblado.
+      World-class technique in South America's most dynamic city.
+    </p>
+    <div class="hero-buttons">
+      <a href="#classes" class="btn-primary">Ver Horario</a>
+      <a href="#visitors" class="btn-secondary">Visiting Medellín?</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-badge">
+      <div class="badge-flag">🇨🇴</div>
+      <div class="badge-title">CBJJ / IBJJF Certified</div>
+      <div class="badge-name">PROF. SEBASTIÁN<br>RÍOS</div>
+      <div class="badge-sub">BJJ Black Belt · 3 Stripes</div>
+      <div class="badge-belt">
+        <div class="belt-stripe black"></div>
+        <div class="belt-stripe black"></div>
+        <div class="belt-stripe black"></div>
+        <div class="belt-stripe amber"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stat"><div class="stat-number">13+</div><div class="stat-label">Years Teaching</div></div>
+  <div class="stat"><div class="stat-number">3X</div><div class="stat-label">Colombian National Champion</div></div>
+  <div class="stat"><div class="stat-number">2011</div><div class="stat-label">Academy Founded</div></div>
+  <div class="stat"><div class="stat-number">GI</div><div class="stat-label">& No-Gi Available</div></div>
+</div>
+
+<section id="about">
+  <div class="about">
+    <div class="about-text">
+      <div class="section-eyebrow">The Professor</div>
+      <h2 class="section-title">MEDELLÍN'S<br>MOST DECORATED<br>BLACK BELT</h2>
+      <p>
+        Sebastián Ríos began training BJJ in Bogotá at age 17 and relocated to Medellín in 2008 to train under regional legend Prof. Andrés Castaño. After earning his black belt in 2011, he founded <strong>Academia BJJ Medellín</strong> — the first dedicated BJJ school in El Poblado.
+      </p>
+      <p>
+        A three-time Colombian National Champion in his weight class, Prof. Ríos has competed at the <strong>Pan American Championships</strong> in Irvine and the <strong>World Masters</strong> in Las Vegas. He has produced over 40 competitors who have placed at national level.
+      </p>
+      <p>
+        His teaching philosophy balances technical precision with the warm, high-energy culture Medellín is known for. Classes are taught in Spanish and English.
+      </p>
+      <div class="credentials">
+        <div class="credential">
+          <div class="credential-icon">🥋</div>
+          <div class="credential-text">
+            <strong>BJJ Black Belt — CBJJ / IBJJF Registered</strong>
+            Lineage: Castaño → Ribeiro → Royler Gracie
+          </div>
+        </div>
+        <div class="credential">
+          <div class="credential-icon">🏆</div>
+          <div class="credential-text">
+            <strong>3x Colombian National Champion</strong>
+            Pan American and World Masters competitor
+          </div>
+        </div>
+        <div class="credential">
+          <div class="credential-icon">🌎</div>
+          <div class="credential-text">
+            <strong>Bilingual Instruction — Spanish & English</strong>
+            Welcoming traveling practitioners since 2011
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-visual">
+      <div class="about-card">
+        <div class="quote-mark">"</div>
+        <p class="quote-text">
+          Medellín used to be a city the world avoided. Now it draws the most curious, creative people on the planet. I want this academy to reflect that transformation — a place where people from everywhere arrive as strangers and leave as training partners.
+        </p>
+        <div class="quote-author">— Prof. Sebastián Ríos</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="classes" style="background: var(--gray); border-top: 1px solid rgba(212,124,26,0.12); border-bottom: 1px solid rgba(212,124,26,0.12);">
+  <div class="section-eyebrow">En El Mat</div>
+  <h2 class="section-title">CLASES &<br>HORARIO</h2>
+
+  <div class="classes-grid">
+    <div class="class-card">
+      <div class="class-icon">🥋</div>
+      <div class="class-name">BJJ Gi</div>
+      <p class="class-desc">Structured fundamentals and advanced technique. All levels. Classes taught in Spanish with English available for visitors.</p>
+      <div class="class-schedule">
+        <div class="schedule-row"><span>Monday / Wed / Fri</span><span>07:00 – 09:00</span></div>
+        <div class="schedule-row"><span>Tuesday / Thursday</span><span>19:00 – 21:00</span></div>
+        <div class="schedule-row"><span>Saturday</span><span>09:00 – 11:30</span></div>
+      </div>
+    </div>
+
+    <div class="class-card">
+      <div class="class-icon">👊</div>
+      <div class="class-name">No-Gi</div>
+      <p class="class-desc">Submission wrestling and leg locks. Popular with MMA fighters from the local scene. High energy, technical focus.</p>
+      <div class="class-schedule">
+        <div class="schedule-row"><span>Tuesday / Thursday</span><span>21:00 – 22:30</span></div>
+        <div class="schedule-row"><span>Sunday</span><span>10:00 – 12:00</span></div>
+      </div>
+    </div>
+
+    <div class="class-card">
+      <div class="class-icon">✈️</div>
+      <div class="class-name">Drop-In / Visitors</div>
+      <p class="class-desc">Medellín gets thousands of international visitors monthly. You're welcome at any class — just reach out before you arrive.</p>
+      <div class="class-schedule">
+        <div class="schedule-row"><span>All classes</span><span>Open to visitors</span></div>
+        <div class="schedule-row"><span>Instagram DM</span><span>to confirm</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="visitors" class="visitors">
+  <div class="visitors-inner">
+    <div class="visitors-text">
+      <div class="section-eyebrow">Traveling Practitioners</div>
+      <h2 class="section-title">VISITING<br>MEDELLÍN?</h2>
+      <p>
+        Medellín has become one of the top destinations for digital nomads, long-term travelers, and adventurous tourists from across the world. El Poblado — our neighborhood — is the epicenter of that scene.
+      </p>
+      <p>
+        We see international practitioners every week. Whether you're here for a weekend or three months, the mat is open.
+      </p>
+      <div class="visitor-steps">
+        <div class="visitor-step">
+          <div class="step-number">01</div>
+          <div class="step-content">
+            <strong>DM us on Instagram</strong>
+            <p>Let us know your belt, when you're arriving, and gi or no-gi preference.</p>
+          </div>
+        </div>
+        <div class="visitor-step">
+          <div class="step-number">02</div>
+          <div class="step-content">
+            <strong>Show up and roll</strong>
+            <p>Loaner gi available in most sizes. We're 5 minutes by Uber from any hotel in El Poblado.</p>
+          </div>
+        </div>
+        <div class="visitor-step">
+          <div class="step-number">03</div>
+          <div class="step-content">
+            <strong>Stay as long as you like</strong>
+            <p>Weekly and monthly rates available. Some visitors have stayed months.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="location-card" id="contact">
+        <div class="location-label">Find Us</div>
+        <div class="location-detail">
+          <div class="location-detail-icon">📍</div>
+          <div class="location-detail-text">
+            <strong>Address</strong>
+            Calle 10 #43D–15<br>
+            El Poblado · Medellín, Colombia
+          </div>
+        </div>
+        <div class="location-detail">
+          <div class="location-detail-icon">📱</div>
+          <div class="location-detail-text">
+            <strong>WhatsApp / Call</strong>
+            +57 314 567 8901
+          </div>
+        </div>
+        <div class="location-detail">
+          <div class="location-detail-icon">📸</div>
+          <div class="location-detail-text">
+            <strong>Instagram</strong>
+            @academiaBJJmedellin
+          </div>
+        </div>
+        <div class="location-detail">
+          <div class="location-detail-icon">🕐</div>
+          <div class="location-detail-text">
+            <strong>Drop-in Fee</strong>
+            30,000 COP (~$7 USD) per class
+          </div>
+        </div>
+        <div class="map-placeholder">📍 Map Embed Here</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="section-eyebrow">Ready to Roll?</div>
+  <h2 class="section-title">COME TRAIN<br><span style="color:var(--amber)">EN MEDELLÍN</span></h2>
+  <p>First class free for visiting practitioners. Message us, show up, and experience Medellín on the mat.</p>
+  <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+    <a href="https://wa.me/573145678901" class="btn-primary" target="_blank">WhatsApp Us</a>
+    <a href="#classes" class="btn-secondary">Ver Horario</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">ACADEMIA <span>BJJ</span> MEDELLÍN</div>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#classes">Classes</a></li>
+    <li><a href="#visitors">Visitors</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 Academia BJJ Medellín · El Poblado, Colombia</div>
+</footer>
+
+</body>
+</html>
