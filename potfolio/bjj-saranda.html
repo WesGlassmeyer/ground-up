@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BJJ Saranda | Gracie Barra Albania | Prof. Dorian Lapaj</title>
+<meta name="description" content="Train Brazilian Jiu-Jitsu in Saranda, Albania with Prof. Dorian Lapaj — Albania's first BJJ Black Belt. Classes for adults, kids, and visiting travelers.">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f2ede6;
+    --red: #c0392b;
+    --red-dark: #96281b;
+    --gold: #c9a84c;
+    --gray: #1e1e1e;
+    --gray-mid: #2e2e2e;
+    --text-muted: #888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(192,57,43,0.2);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 3px;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--red); }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2.5rem;
+  }
+
+  nav ul a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  nav ul a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--red);
+    color: var(--white) !important;
+    padding: 0.5rem 1.2rem;
+    font-weight: 600 !important;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--red-dark) !important; color: var(--white) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 70% 50%, rgba(192,57,43,0.08) 0%, transparent 60%),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 60px,
+        rgba(255,255,255,0.015) 60px,
+        rgba(255,255,255,0.015) 61px
+      );
+    pointer-events: none;
+  }
+
+  .hero-text { position: relative; z-index: 2; }
+
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 8vw, 7rem);
+    line-height: 0.95;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 .line-red { color: var(--red); }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #aaa;
+    max-width: 440px;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-sub strong { color: var(--white); font-weight: 600; }
+
+  .hero-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--red);
+    color: var(--white);
+    padding: 0.9rem 2rem;
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: background 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: var(--red-dark); transform: translateY(-2px); }
+
+  .btn-secondary {
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--white);
+    padding: 0.9rem 2rem;
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: border-color 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+
+  .btn-secondary:hover { border-color: var(--white); transform: translateY(-2px); }
+
+  .hero-visual {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-badge {
+    width: 320px;
+    height: 320px;
+    border: 1px solid rgba(192,57,43,0.3);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    background: radial-gradient(circle, rgba(192,57,43,0.05) 0%, transparent 70%);
+    animation: pulse-ring 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse-ring {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(192,57,43,0.1); }
+    50% { box-shadow: 0 0 0 20px rgba(192,57,43,0); }
+  }
+
+  .hero-badge::before {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 50%;
+  }
+
+  .badge-flag { font-size: 3rem; margin-bottom: 0.5rem; }
+
+  .badge-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+  }
+
+  .badge-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .badge-sub {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .badge-belt {
+    margin-top: 1rem;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .belt-stripe {
+    width: 30px;
+    height: 6px;
+    background: #1a1a1a;
+    border-radius: 2px;
+  }
+
+  .belt-stripe.black { background: #111; border: 1px solid #333; }
+  .belt-stripe.red { background: var(--red); }
+
+  /* STATS */
+  .stats-bar {
+    background: var(--gray);
+    padding: 2rem 3rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid rgba(192,57,43,0.2);
+    border-bottom: 1px solid rgba(192,57,43,0.2);
+  }
+
+  .stat {
+    text-align: center;
+    padding: 0 1rem;
+    border-right: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .stat:last-child { border-right: none; }
+
+  .stat-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    color: var(--red);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+  }
+
+  /* SECTIONS */
+  section { padding: 6rem 3rem; }
+
+  .section-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ABOUT */
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .about-text p {
+    color: #aaa;
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+    font-size: 1rem;
+  }
+
+  .about-text p strong { color: var(--white); font-weight: 600; }
+
+  .credentials {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .credential {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--gray);
+    border-left: 2px solid var(--red);
+  }
+
+  .credential-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .credential-text {
+    font-size: 0.85rem;
+    color: #bbb;
+    line-height: 1.5;
+  }
+
+  .credential-text strong {
+    display: block;
+    color: var(--white);
+    font-size: 0.9rem;
+    margin-bottom: 0.2rem;
+    font-weight: 600;
+  }
+
+  .about-visual {
+    position: relative;
+  }
+
+  .about-card {
+    background: var(--gray);
+    border: 1px solid rgba(255,255,255,0.05);
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-card::before {
+    content: 'BJJ';
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 10rem;
+    color: rgba(192,57,43,0.05);
+    right: -1rem;
+    bottom: -1rem;
+    letter-spacing: -5px;
+    pointer-events: none;
+  }
+
+  .quote-mark {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    color: var(--red);
+    line-height: 0.5;
+    margin-bottom: 1rem;
+    opacity: 0.6;
+  }
+
+  .quote-text {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--white);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .quote-author {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* CLASSES */
+  .classes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.05);
+    margin-top: 3rem;
+  }
+
+  .class-card {
+    background: var(--black);
+    padding: 2.5rem;
+    transition: background 0.2s;
+    cursor: default;
+  }
+
+  .class-card:hover { background: var(--gray); }
+
+  .class-icon { font-size: 2rem; margin-bottom: 1rem; }
+
+  .class-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+  }
+
+  .class-desc {
+    font-size: 0.9rem;
+    color: #888;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .class-schedule {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 1rem;
+  }
+
+  .schedule-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    padding: 0.3rem 0;
+    color: #777;
+  }
+
+  .schedule-row span:last-child { color: var(--white); }
+
+  /* VISITORS */
+  .visitors {
+    background: var(--gray);
+    border-top: 1px solid rgba(192,57,43,0.15);
+    border-bottom: 1px solid rgba(192,57,43,0.15);
+  }
+
+  .visitors-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .visitors-text p {
+    color: #aaa;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .visitor-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .visitor-step {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .step-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--red);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 2rem;
+    opacity: 0.5;
+  }
+
+  .step-content strong {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+  }
+
+  .step-content p {
+    font-size: 0.9rem;
+    color: #777;
+    line-height: 1.5;
+    margin: 0 !important;
+  }
+
+  .location-card {
+    background: var(--black);
+    padding: 2.5rem;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .location-label {
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .location-detail {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+    align-items: flex-start;
+  }
+
+  .location-detail-icon { font-size: 1.1rem; flex-shrink: 0; }
+
+  .location-detail-text {
+    font-size: 0.9rem;
+    color: #aaa;
+    line-height: 1.5;
+  }
+
+  .location-detail-text strong {
+    display: block;
+    color: var(--white);
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+
+  .map-placeholder {
+    margin-top: 1.5rem;
+    background: var(--gray-mid);
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border: 1px dashed rgba(255,255,255,0.08);
+  }
+
+  /* CTA */
+  .cta-section {
+    text-align: center;
+    padding: 8rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(192,57,43,0.1) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .cta-section .section-title { font-size: clamp(3rem, 6vw, 5rem); }
+
+  .cta-section p {
+    color: #888;
+    font-size: 1.1rem;
+    max-width: 500px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--gray);
+    padding: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 3px;
+    color: var(--white);
+  }
+
+  .footer-logo span { color: var(--red); }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--white); }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-text > * {
+    animation: fadeUp 0.8s ease forwards;
+    opacity: 0;
+  }
+
+  .hero-eyebrow { animation-delay: 0.1s; }
+  .hero h1 { animation-delay: 0.25s; }
+  .hero-sub { animation-delay: 0.4s; }
+  .hero-buttons { animation-delay: 0.55s; }
+
+  .hero-visual {
+    animation: fadeUp 1s ease 0.3s forwards;
+    opacity: 0;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 3rem; }
+    .hero-visual { order: -1; }
+    .hero-badge { width: 220px; height: 220px; }
+    .badge-name { font-size: 1.3rem; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); padding: 2rem 1.5rem; gap: 1.5rem; }
+    .stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1.5rem; }
+    .stat:nth-child(3), .stat:last-child { border-bottom: none; }
+    section { padding: 4rem 1.5rem; }
+    .about, .visitors-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .classes-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">BJJ <span>SARANDA</span></a>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#classes">Classes</a></li>
+    <li><a href="#visitors">Visitors</a></li>
+    <li><a href="#contact" class="nav-cta">Train With Us</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Gracie Barra Albania · Est. 2003</div>
+    <h1>THE ART<br><span class="line-red">OF JITSU</span><br>IN ALBANIA</h1>
+    <p class="hero-sub">
+      Train with <strong>Prof. Dorian Lapaj</strong> — Albania's first BJJ Black Belt — in the heart of Saranda. 
+      Whether you're a local student or a traveling practitioner, the mat is open.
+    </p>
+    <div class="hero-buttons">
+      <a href="#classes" class="btn-primary">View Schedule</a>
+      <a href="#visitors" class="btn-secondary">Visiting Saranda?</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-badge">
+      <div class="badge-flag">🇦🇱</div>
+      <div class="badge-title">Gracie Barra Certified</div>
+      <div class="badge-name">PROF. DORIAN<br>LAPAJ</div>
+      <div class="badge-sub">BJJ Black Belt · IBJJF</div>
+      <div class="badge-belt">
+        <div class="belt-stripe black"></div>
+        <div class="belt-stripe black"></div>
+        <div class="belt-stripe black"></div>
+        <div class="belt-stripe red"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-number">20+</div>
+    <div class="stat-label">Years Teaching</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">1ST</div>
+    <div class="stat-label">Albanian Black Belt</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">2003</div>
+    <div class="stat-label">School Founded</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">GB</div>
+    <div class="stat-label">Gracie Barra Certified</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about">
+    <div class="about-text">
+      <div class="section-eyebrow">The Professor</div>
+      <h2 class="section-title">ALBANIA'S<br>FIRST BLACK BELT</h2>
+      <p>
+        Professor Dorian Lapaj is a pioneer. In 2003, he founded the first Brazilian Jiu-Jitsu school in Albania — right here in Saranda. What began as a passionate mission has grown into a <strong>nationally recognized academy</strong> and a thriving community.
+      </p>
+      <p>
+        Certified in England by world champion <strong>Prof. Victor Estima of Gracie Barra</strong>, and recognized by the <strong>International Brazilian Jiu-Jitsu Federation (IBJJF)</strong>, Prof. Lapaj brings world-class technique to the Albanian coast.
+      </p>
+      <p>
+        His background spans military service as an Officer of the Albanian Marines, years competing in Muay-Thai, MMA, and BJJ across Europe, and a lifetime dedicated to the gentle art.
+      </p>
+      <div class="credentials">
+        <div class="credential">
+          <div class="credential-icon">🥋</div>
+          <div class="credential-text">
+            <strong>BJJ Black Belt — IBJJF Certified</strong>
+            Certified by Gracie Barra World Champion Prof. Victor Estima, England
+          </div>
+        </div>
+        <div class="credential">
+          <div class="credential-icon">🏆</div>
+          <div class="credential-text">
+            <strong>National Championship Organizer</strong>
+            Founder & host of Albanian BJJ Championships
+          </div>
+        </div>
+        <div class="credential">
+          <div class="credential-icon">⚔️</div>
+          <div class="credential-text">
+            <strong>Albanian Marines Officer</strong>
+            Military background in combatives, Judo, and Sambo
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-visual">
+      <div class="about-card">
+        <div class="quote-mark">"</div>
+        <p class="quote-text">
+          Jiu-Jitsu is not just a sport — it is a philosophy. It teaches values, respect between people, and the strength to face any challenge with discipline and calm.
+        </p>
+        <div class="quote-author">— Prof. Dorian Lapaj</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLASSES -->
+<section id="classes" style="background: var(--gray); border-top: 1px solid rgba(192,57,43,0.15); border-bottom: 1px solid rgba(192,57,43,0.15);">
+  <div class="section-eyebrow">On The Mat</div>
+  <h2 class="section-title">CLASSES &<br>SCHEDULE</h2>
+
+  <div class="classes-grid">
+    <div class="class-card">
+      <div class="class-icon">🥋</div>
+      <div class="class-name">Adult BJJ</div>
+      <p class="class-desc">Fundamentals through advanced technique. All levels welcome. Gi and No-Gi available.</p>
+      <div class="class-schedule">
+        <div class="schedule-row"><span>Tuesday</span><span>18:15 – 20:00</span></div>
+        <div class="schedule-row"><span>Thursday</span><span>18:15 – 20:00</span></div>
+        <div class="schedule-row"><span>Saturday</span><span>18:15 – 20:00</span></div>
+      </div>
+    </div>
+
+    <div class="class-card">
+      <div class="class-icon">👦</div>
+      <div class="class-name">Kids BJJ</div>
+      <p class="class-desc">Building confidence, discipline, and self-defense skills for young practitioners in a safe, fun environment.</p>
+      <div class="class-schedule">
+        <div class="schedule-row"><span>Saturday</span><span>11:00 – 13:00</span></div>
+        <div class="schedule-row"><span>Sunday</span><span>11:00 – 13:00</span></div>
+      </div>
+    </div>
+
+    <div class="class-card">
+      <div class="class-icon">✈️</div>
+      <div class="class-name">Drop-In / Visitors</div>
+      <p class="class-desc">Traveling practitioners are always welcome. Come train, roll, and experience Albanian hospitality on the mat.</p>
+      <div class="class-schedule">
+        <div class="schedule-row"><span>All regular classes</span><span>Open mat</span></div>
+        <div class="schedule-row"><span>Contact us</span><span>to confirm</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISITORS -->
+<section id="visitors" class="visitors">
+  <div class="visitors-inner">
+    <div class="visitors-text">
+      <div class="section-eyebrow">Traveling Practitioners</div>
+      <h2 class="section-title">VISITING<br>SARANDA?</h2>
+      <p>
+        Saranda is one of Albania's most beautiful coastal cities — and now it has a place to train. 
+        Visitors are welcome at any regular class. Just reach out before you arrive.
+      </p>
+      <div class="visitor-steps">
+        <div class="visitor-step">
+          <div class="step-number">01</div>
+          <div class="step-content">
+            <strong>Message us before you arrive</strong>
+            <p>Drop us a message via WhatsApp or Facebook to confirm schedule and what to bring.</p>
+          </div>
+        </div>
+        <div class="visitor-step">
+          <div class="step-number">02</div>
+          <div class="step-content">
+            <strong>Show up and train</strong>
+            <p>Gi training available. No-Gi welcome. We speak English.</p>
+          </div>
+        </div>
+        <div class="visitor-step">
+          <div class="step-number">03</div>
+          <div class="step-content">
+            <strong>Experience the community</strong>
+            <p>Saranda's mat is one of the most unique in Europe. You won't regret it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="location-card" id="contact">
+        <div class="location-label">Find Us</div>
+        <div class="location-detail">
+          <div class="location-detail-icon">📍</div>
+          <div class="location-detail-text">
+            <strong>Address</strong>
+            Rruga Telat Noga, Pallati nr.10<br>
+            Pranë Zjarrfikëses · Sarandë, Albania
+          </div>
+        </div>
+        <div class="location-detail">
+          <div class="location-detail-icon">📱</div>
+          <div class="location-detail-text">
+            <strong>WhatsApp / Call</strong>
+            +355 69 949 9221
+          </div>
+        </div>
+        <div class="location-detail">
+          <div class="location-detail-icon">📘</div>
+          <div class="location-detail-text">
+            <strong>Facebook</strong>
+            BJJ – Sarande
+          </div>
+        </div>
+        <div class="location-detail">
+          <div class="location-detail-icon">🌐</div>
+          <div class="location-detail-text">
+            <strong>Academy</strong>
+            Gracie Barra Saranda · GB.Sarande
+          </div>
+        </div>
+        <div class="map-placeholder">📍 Map Embed Here</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-eyebrow">Ready to Roll?</div>
+  <h2 class="section-title">COME TRAIN<br><span style="color:var(--red)">WITH US</span></h2>
+  <p>Whether you're a complete beginner or a seasoned competitor — the mat is open. First class is always free.</p>
+  <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+    <a href="tel:+35569499221" class="btn-primary">Call Us Now</a>
+    <a href="https://www.facebook.com/Brazilian.Jiu.Jitsu.Albania.1.Academy/" class="btn-secondary" target="_blank">Message on Facebook</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">BJJ <span>SARANDA</span></div>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#classes">Classes</a></li>
+    <li><a href="#visitors">Visitors</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 BJJ Saranda · Gracie Barra Albania</div>
+</footer>
+
+</body>
+</html>
