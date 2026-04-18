@@ -1,3 +1,9 @@
 [build]
   publish = "portfolio"
   functions = "portfolio/netlify/functions"
+
+[functions]
+  included_files = []
+
+[functions."claude"]
+  timeout = 26
