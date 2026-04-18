@@ -645,7 +645,7 @@ async function generateCities() {
     const existing = state.cities.map(c => c.name).join(', ');
     const raw = await callClaude(
       'You are a research assistant identifying target cities for a web services business. Return ONLY a valid JSON array. No markdown, no explanation, no preamble. Start your response with [ and end with ].',
-      `Generate a JSON array of 40 tourist cities ideal for a business building websites for BJJ/martial arts gyms. Requirements:
+      `Generate a JSON array of 20 tourist cities ideal for a business building websites for BJJ/martial arts gyms. Requirements:
 - High English-speaking tourist traffic
 - Coastal or culturally significant destinations  
 - Cover these regions: Adriatic, Mediterranean, Southeast Asia, Latin America, English-speaking Europe
