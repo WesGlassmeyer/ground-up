@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GroundUp Agent</title>
+<style>
+  :root {
+    --black: #0d0d0d;
+    --white: #f5f0e8;
+    --red: #e63329;
+    --red-dark: #b5261e;
+    --green: #1a9e82;
+    --amber: #f0a500;
+    --gray: #111;
+    --gray2: #1a1a1a;
+    --gray3: #222;
+    --muted: #555;
+    --muted2: #777;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 13px;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--gray);
+    border-bottom: 1px solid #1e1e1e;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .logo { font-weight: 700; font-size: 13px; letter-spacing: 3px; }
+  .logo span { color: var(--red); }
+
+  .header-right { display: flex; gap: 0.8rem; align-items: center; }
+  .follow-up-alert { font-size: 11px; color: var(--amber); }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    border-bottom: 1px solid #1e1e1e;
+    background: var(--gray);
+    padding: 0 1.5rem;
+    overflow-x: auto;
+  }
+
+  .tab {
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    color: #444;
+  }
+  .tab.active { color: var(--white); border-bottom-color: var(--red); }
+
+  /* MAIN */
+  .main { padding: 1.5rem; }
+
+  /* STATS */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: var(--gray3);
+    margin-bottom: 1.5rem;
+  }
+
+  .stat { background: var(--gray); padding: 1rem; text-align: center; }
+  .stat-num { font-size: 1.8rem; font-weight: 700; color: var(--red); line-height: 1; font-family: monospace; }
+  .stat-num.warn { color: var(--amber); }
+  .stat-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-top: 0.2rem; }
+
+  /* PIPELINE GRID */
+  .pipeline-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--gray);
+    border: 1px solid #1e1e1e;
+    padding: 1.2rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .card-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.5rem;
+  }
+
+  .card-desc {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  /* BUTTONS */
+  .btn {
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    padding: 0.65rem 1rem;
+    cursor: pointer;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    width: 100%;
+    font-family: inherit;
+  }
+  .btn:hover { background: var(--red-dark); }
+  .btn:disabled { background: #1a1a1a; color: #333; cursor: not-allowed; }
+  .btn.amber { background: var(--amber); }
+  .btn.amber:hover { background: #c98900; }
+  .btn.dark { background: #2a2a2a; }
+  .btn.dark:hover { background: #333; }
+
+  .btn-ghost {
+    background: none;
+    border: 1px solid #2a2a2a;
+    color: #888;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    font-size: 10px;
+    letter-spacing: 1px;
+    font-family: inherit;
+  }
+  .btn-ghost:hover { border-color: #444; color: var(--white); }
+  .btn-ghost.green { color: var(--green); border-color: #1a9e8244; }
+
+  /* LOG */
+  .log {
+    background: #0a0a0a;
+    border: 1px solid #1a1a1a;
+    padding: 0.8rem;
+    height: 160px;
+    overflow-y: auto;
+    font-family: monospace;
+    font-size: 11px;
+  }
+
+  .log-line { margin-bottom: 2px; }
+  .log-line.info { color: var(--muted); }
+  .log-line.success { color: var(--green); }
+  .log-line.warn { color: var(--amber); }
+  .log-line.error { color: var(--red); }
+  .log-empty { color: #2a2a2a; }
+
+  /* RUNNING BANNER */
+  .running-banner {
+    background: #1a1a08;
+    border: 1px solid #f0a50022;
+    padding: 0.6rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 11px;
+    color: var(--amber);
+    display: none;
+  }
+  .running-banner.visible { display: block; }
+
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th { text-align: left; padding: 0.5rem 0.7rem; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid #1e1e1e; font-weight: 400; }
+  td { padding: 0.7rem; border-bottom: 1px solid #141414; vertical-align: top; }
+  .td-muted { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+  /* STATUS SELECT */
+  .status-select {
+    background: #0a0a0a;
+    border: 1px solid #2a2a2a;
+    color: var(--white);
+    padding: 0.25rem 0.4rem;
+    font-size: 10px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  /* PITCH BOX */
+  .pitch-box {
+    background: #0a0a0a;
+    border: 1px solid #1e1e1e;
+    padding: 0.8rem;
+    font-size: 12px;
+    line-height: 1.7;
+    color: #bbb;
+    white-space: pre-wrap;
+    margin-top: 0.5rem;
+  }
+
+  .pitch-meta { font-size: 10px; color: #333; margin-top: 0.4rem; }
+  .pitch-subject { font-size: 10px; color: var(--amber); margin-bottom: 0.4rem; }
+
+  .pitch-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.6rem;
+  }
+
+  .pitch-name { font-weight: 500; }
+  .pitch-info { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+  /* EXPORT */
+  .export-row {
+    text-align: right;
+    margin-top: 0.8rem;
+  }
+  .export-note { font-size: 10px; color: #333; margin-top: 0.3rem; }
+
+  /* MODAL */
+  .modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+  }
+  .modal.visible { display: flex; }
+
+  .modal-box {
+    background: var(--gray);
+    border: 1px solid #2a2a2a;
+    padding: 1.8rem;
+    width: 440px;
+    max-width: 92vw;
+  }
+
+  .modal-title {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 1.5rem;
+  }
+
+  .modal-section {
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    margin-top: -0.5rem;
+  }
+
+  .modal-note {
+    font-size: 10px;
+    color: #333;
+    margin-top: 1rem;
+    line-height: 1.6;
+  }
+
+  .modal-actions { display: flex; gap: 0.8rem; margin-top: 0.5rem; }
+  .modal-actions .btn { flex: 1; }
+
+  /* FORM */
+  label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    background: #0a0a0a;
+    border: 1px solid #2a2a2a;
+    color: var(--white);
+    padding: 0.6rem 0.8rem;
+    font-size: 13px;
+    width: 100%;
+    font-family: inherit;
+    outline: none;
+    margin-bottom: 1rem;
+  }
+
+  input:focus { border-color: var(--red); }
+
+  /* EMPTY STATE */
+  .empty {
+    color: #2a2a2a;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  /* CITY STATUS */
+  .city-worked { font-size: 10px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+  .city-unworked { font-size: 10px; color: var(--green); letter-spacing: 1px; text-transform: uppercase; }
+
+  /* LOG/CARD HEADER */
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.6rem;
+  }
+
+  /* OVERFLOW */
+  .overflow-x { overflow-x: auto; }
+
+  @media (max-width: 600px) {
+    .pipeline-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">GROUND<span>UP</span> AGENT</div>
+  <div class="header-right">
+    <span class="follow-up-alert" id="followUpAlert" style="display:none"></span>
+    <button class="btn-ghost" onclick="openSettings()">⚙ Settings</button>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('pipeline', this)">Pipeline</button>
+  <button class="tab" onclick="switchTab('prospects', this)">Prospects</button>
+  <button class="tab" onclick="switchTab('pitches', this)">Pitches</button>
+  <button class="tab" onclick="switchTab('cities', this)">Cities</button>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="running-banner" id="runningBanner">⟳ <span id="runningStep"></span></div>
+
+  <!-- PIPELINE TAB -->
+  <div id="tab-pipeline">
+    <div class="stats-grid">
+      <div class="stat"><div class="stat-num" id="stat-cities">0</div><div class="stat-label">Cities Left</div></div>
+      <div class="stat"><div class="stat-num" id="stat-prospects">0</div><div class="stat-label">Prospects</div></div>
+      <div class="stat"><div class="stat-num" id="stat-pitches">0</div><div class="stat-label">Pitches</div></div>
+      <div class="stat"><div class="stat-num" id="stat-contacted">0</div><div class="stat-label">Contacted</div></div>
+      <div class="stat"><div class="stat-num" id="stat-followups">0</div><div class="stat-label">Follow-ups</div></div>
+    </div>
+
+    <div class="pipeline-grid">
+      <div class="card">
+        <div class="card-label">01 — City Queue</div>
+        <p class="card-desc" id="cityQueueDesc">Generate your list of 40 target cities. Only needs to run once.</p>
+        <button class="btn" id="btnCities" onclick="generateCities()">Generate Queue</button>
+      </div>
+      <div class="card">
+        <div class="card-label">02 — Research City</div>
+        <p class="card-desc" id="researchDesc">Web-searches the next city for qualifying gyms with weak digital presence.</p>
+        <button class="btn" id="btnResearch" onclick="researchNextCity()">Research Next City</button>
+      </div>
+      <div class="card">
+        <div class="card-label">03 — Write Pitches</div>
+        <p class="card-desc" id="pitchDesc">Writes personalized pitches for uncontacted prospects. Links correct regional demo automatically.</p>
+        <button class="btn" id="btnPitches" onclick="writePitches()">Write Pitches</button>
+      </div>
+      <div class="card">
+        <div class="card-label">04 — Follow-ups</div>
+        <p class="card-desc" id="followUpDesc">Checks for prospects contacted 7+ days ago with no reply.</p>
+        <button class="btn dark" id="btnFollowUp" onclick="checkFollowUps()">Check Follow-ups</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-label" style="margin-bottom:0">Activity Log</div>
+        <button class="btn-ghost" onclick="clearLog()">Clear</button>
+      </div>
+      <div class="log" id="log">
+        <div class="log-empty">No activity yet. Run a step above to get started.</div>
+      </div>
+    </div>
+
+    <div class="export-row">
+      <button class="btn-ghost" id="exportBtn" onclick="exportForContext()">📋 Copy for CONTEXT.md</button>
+      <div class="export-note">Paste into CONTEXT.md after each session to keep Claude in sync.</div>
+    </div>
+  </div>
+
+  <!-- PROSPECTS TAB -->
+  <div id="tab-prospects" style="display:none">
+    <div class="card">
+      <div class="card-label" id="prospectsTitle">All Prospects</div>
+      <div class="overflow-x" id="prospectsTable">
+        <div class="empty">No prospects yet. Run Research from the Pipeline tab.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PITCHES TAB -->
+  <div id="tab-pitches" style="display:none">
+    <div id="pitchesList">
+      <div class="card empty">No pitches yet. Run Write Pitches from the Pipeline tab.</div>
+    </div>
+  </div>
+
+  <!-- CITIES TAB -->
+  <div id="tab-cities" style="display:none">
+    <div class="card">
+      <div class="card-label" id="citiesTitle">City Queue</div>
+      <div class="overflow-x" id="citiesTable">
+        <div class="empty">No cities yet. Generate from the Pipeline tab.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="modal" id="settingsModal">
+  <div class="modal-box">
+    <div class="modal-title">Settings</div>
+    <label>Telegram Bot Token</label>
+    <input type="password" id="inputTelegramToken" placeholder="123456:ABC-...">
+    <label>Telegram Chat ID</label>
+    <input type="text" id="inputTelegramChatId" placeholder="-100...">
+    <div class="modal-note" style="margin-bottom:1rem;margin-top:-0.5rem;color:#555;">Optional — needed for follow-up alerts on your phone.</div>
+    <div class="modal-actions">
+      <button class="btn" onclick="saveSettings()">Save Settings</button>
+      <button class="btn-ghost" onclick="closeSettings()">Cancel</button>
+    </div>
+    <div class="modal-note">Settings are saved in your browser's localStorage for this device.</div>
+  </div>
+</div>
+
+<script>
+// ── State ──────────────────────────────────────────────────────────
+const REGIONAL_DEMOS = {
+  mediterranean: 'https://groundupweb.com/examples/bjj-saranda.html',
+  southeast_asia: 'https://groundupweb.com/examples/bjj-canggu.html',
+  latin_america:  'https://groundupweb.com/examples/bjj-medellin.html',
+  europe:         'https://groundupweb.com/examples/bjj-lisbon.html',
+};
+
+const REGION_LABELS = {
+  mediterranean: 'Mediterranean / Adriatic',
+  southeast_asia: 'Southeast Asia',
+  latin_america:  'Latin America',
+  europe:         'Europe',
+};
+
+let state = {
+  cities: [],
+  prospects: [],
+  pitches: [],
+  telegramToken: '',
+  telegramChatId: '',
+};
+
+let running = false;
+
+// ── Persistence ────────────────────────────────────────────────────
+function saveState() {
+  localStorage.setItem('groundup_state', JSON.stringify({
+    cities: state.cities,
+    prospects: state.prospects,
+    pitches: state.pitches,
+    telegramToken: state.telegramToken,
+    telegramChatId: state.telegramChatId,
+  }));
+}
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem('groundup_state');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      state = { ...state, ...parsed };
+    }
+  } catch(e) { console.error('Load state error:', e); }
+}
+
+// ── Claude API ─────────────────────────────────────────────────────
+async function callClaude(systemPrompt, userPrompt, useWebSearch = false) {
+  const body = {
+    model: 'claude-sonnet-4-20250514',
+    max_tokens: 1000,
+    system: systemPrompt,
+    messages: [{ role: 'user', content: userPrompt }],
+  };
+  if (useWebSearch) {
+    body.tools = [{ type: 'web_search_20250305', name: 'web_search' }];
+  }
+
+  const res = await fetch('/.netlify/functions/claude', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error?.message || `API error ${res.status}`);
+  }
+
+  const data = await res.json();
+  return data.content
+    .filter(b => b.type === 'text')
+    .map(b => b.text)
+    .join('');
+}
+
+function parseJSON(raw) {
+  // Strip markdown code fences
+  let clean = raw.replace(/```json\s*/gi, '').replace(/```\s*/g, '').trim();
+  // Try direct parse
+  try { return JSON.parse(clean); } catch {}
+  // Try extracting first array or object
+  const arrMatch = clean.match(/\[[\s\S]*\]/);
+  if (arrMatch) { try { return JSON.parse(arrMatch[0]); } catch {} }
+  const objMatch = clean.match(/\{[\s\S]*\}/);
+  if (objMatch) { try { return JSON.parse(objMatch[0]); } catch {} }
+  // Last resort: find JSON between first [ and last ]
+  const start = clean.indexOf('[');
+  const end = clean.lastIndexOf(']');
+  if (start !== -1 && end !== -1 && end > start) {
+    try { return JSON.parse(clean.slice(start, end + 1)); } catch {}
+  }
+  throw new Error('Could not parse JSON from response. Raw: ' + clean.slice(0, 100));
+}
+
+// ── Telegram ───────────────────────────────────────────────────────
+async function sendTelegram(message) {
+  if (!state.telegramToken || !state.telegramChatId) return false;
+  try {
+    await fetch(`https://api.telegram.org/bot${state.telegramToken}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: state.telegramChatId, text: message, parse_mode: 'HTML' }),
+    });
+    return true;
+  } catch { return false; }
+}
+
+// ── Logging ────────────────────────────────────────────────────────
+function addLog(msg, type = 'info') {
+  const log = document.getElementById('log');
+  const empty = log.querySelector('.log-empty');
+  if (empty) empty.remove();
+  const line = document.createElement('div');
+  line.className = `log-line ${type}`;
+  const ts = new Date().toLocaleTimeString();
+  line.textContent = `[${ts}] ${msg}`;
+  log.appendChild(line);
+  log.scrollTop = log.scrollHeight;
+}
+
+function clearLog() {
+  document.getElementById('log').innerHTML = '<div class="log-empty">No activity yet.</div>';
+}
+
+// ── Running state ──────────────────────────────────────────────────
+function setRunning(isRunning, step = '') {
+  running = isRunning;
+  const banner = document.getElementById('runningBanner');
+  document.getElementById('runningStep').textContent = step;
+  banner.classList.toggle('visible', isRunning);
+  ['btnCities','btnResearch','btnPitches','btnFollowUp'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.disabled = isRunning;
+  });
+}
+
+// ── Stats ──────────────────────────────────────────────────────────
+function updateStats() {
+  const citiesLeft = state.cities.filter(c => c.status === 'unworked').length;
+  const contacted = state.prospects.filter(p => p.status === 'contacted').length;
+  const followUpsDue = state.prospects.filter(p => {
+    if (p.status !== 'contacted' || !p.date_contacted) return false;
+    return Math.floor((Date.now() - new Date(p.date_contacted)) / 86400000) >= 7;
+  }).length;
+
+  document.getElementById('stat-cities').textContent = citiesLeft;
+  document.getElementById('stat-prospects').textContent = state.prospects.length;
+  document.getElementById('stat-pitches').textContent = state.pitches.length;
+  document.getElementById('stat-contacted').textContent = contacted;
+
+  const fuEl = document.getElementById('stat-followups');
+  fuEl.textContent = followUpsDue;
+  fuEl.className = 'stat-num' + (followUpsDue > 0 ? ' warn' : '');
+
+  const alert = document.getElementById('followUpAlert');
+  if (followUpsDue > 0) {
+    alert.textContent = `⚠ ${followUpsDue} follow-up${followUpsDue > 1 ? 's' : ''} due`;
+    alert.style.display = 'inline';
+  } else {
+    alert.style.display = 'none';
+  }
+
+  // Update button states
+  document.getElementById('btnResearch').disabled = running || citiesLeft === 0;
+  const btnFU = document.getElementById('btnFollowUp');
+  if (followUpsDue > 0) {
+    btnFU.className = 'btn amber';
+  } else {
+    btnFU.className = 'btn dark';
+  }
+
+  // City queue desc
+  const nextCity = state.cities.find(c => c.status === 'unworked');
+  document.getElementById('cityQueueDesc').textContent = state.cities.length === 0
+    ? 'Generate your list of 40 target cities. Only needs to run once.'
+    : `${citiesLeft} cities remaining. Next: ${nextCity?.name || '—'}`;
+
+  document.getElementById('btnCities').textContent = state.cities.length === 0 ? 'Generate Queue' : 'Add More Cities';
+
+  // Cities title
+  document.getElementById('citiesTitle').textContent = `City Queue — ${state.cities.length} total · ${citiesLeft} remaining`;
+  document.getElementById('prospectsTitle').textContent = `All Prospects (${state.prospects.length})`;
+}
+
+// ── STEP 1: Generate cities ────────────────────────────────────────
+async function generateCities() {
+  setRunning(true, 'Generating city queue...');
+  addLog('Generating city queue...', 'info');
+  try {
+    const existing = state.cities.map(c => c.name).join(', ');
+    const raw = await callClaude(
+      'You are a research assistant identifying target cities for a web services business. Return ONLY a valid JSON array. No markdown, no explanation, no preamble. Start your response with [ and end with ].',
+      `Generate a JSON array of 40 tourist cities ideal for a business building websites for BJJ/martial arts gyms. Requirements:
+- High English-speaking tourist traffic
+- Coastal or culturally significant destinations  
+- Cover these regions: Adriatic, Mediterranean, Southeast Asia, Latin America, English-speaking Europe
+- Cities where local small businesses likely have weak digital presence
+- BJJ and martial arts are practiced there
+${existing ? `\nDo NOT include these cities already in queue: ${existing}` : ''}
+
+Return ONLY this JSON array with no other text:
+[{"name":"City Name","country":"Country Name","region":"mediterranean","tourist_volume":"high","notes":"one sentence why good target"}]
+
+Region must be one of: mediterranean, southeast_asia, latin_america, europe`
+    );
+    const newCities = parseJSON(raw).map(c => ({ ...c, status: 'unworked' }));
+    state.cities = [...state.cities, ...newCities];
+    saveState();
+    renderCitiesTable();
+    updateStats();
+    addLog(`✓ Generated ${newCities.length} cities. ${state.cities.length} total in queue.`, 'success');
+  } catch(e) {
+    addLog(`✗ Error: ${e.message}`, 'error');
+  }
+  setRunning(false);
+}
+
+// ── STEP 2: Research next city ─────────────────────────────────────
+async function researchNextCity() {
+  const next = state.cities.find(c => c.status === 'unworked');
+  if (!next) { addLog('No unworked cities. Generate more first.', 'warn'); return; }
+  setRunning(true, `Researching ${next.name}...`);
+  addLog(`Researching ${next.name}, ${next.country}...`, 'info');
+  try {
+    const today = new Date().toISOString().split('T')[0];
+    const raw = await callClaude(
+      'You find BJJ/martial arts gyms with weak or missing digital presence in tourist cities. Return ONLY a valid JSON array. No markdown, no explanation. Start with [ and end with ].',
+      `Search for BJJ gyms, Brazilian Jiu-Jitsu academies, and martial arts schools in ${next.name}, ${next.country}.
+
+Only include gyms that have WEAK or MISSING digital presence: no website, website not in English, outdated website, or missing Google Business listing.
+
+Return ONLY this JSON array (empty array [] if none found):
+[{"gym_name":"Name","city":"${next.name}","country":"${next.country}","region":"${next.region}","instructor":null,"digital_gap":"specific description of what is missing","contact_email":null,"contact_instagram":null,"contact_facebook":null,"contact_whatsapp":null,"best_contact":"email","pitch_angle":"specific hook for pitch","date_found":"${today}","status":"not_contacted"}]
+
+best_contact must be one of: email, instagram, facebook, whatsapp
+Return maximum 6 prospects.`,
+      true
+    );
+    const found = parseJSON(raw);
+    // Mark city as worked
+    state.cities = state.cities.map(c =>
+      c.name === next.name && c.country === next.country
+        ? { ...c, status: 'worked', date_worked: new Date().toISOString().split('T')[0] }
+        : c
+    );
+    if (found.length === 0) {
+      addLog(`No qualifying prospects in ${next.name}. City marked worked.`, 'warn');
+    } else {
+      state.prospects = [...state.prospects, ...found];
+      addLog(`✓ Found ${found.length} prospects in ${next.name}.`, 'success');
+    }
+    saveState();
+    renderProspectsTable();
+    renderCitiesTable();
+    updateStats();
+  } catch(e) {
+    addLog(`✗ Error: ${e.message}`, 'error');
+  }
+  setRunning(false);
+}
+
+// ── STEP 3: Write pitches ──────────────────────────────────────────
+async function writePitches() {
+  const unpitched = state.prospects.filter(p =>
+    p.status === 'not_contacted' &&
+    !state.pitches.find(pi => pi.gym_name === p.gym_name && pi.city === p.city)
+  );
+  if (unpitched.length === 0) { addLog('No new prospects to pitch.', 'warn'); return; }
+  setRunning(true, `Writing ${unpitched.length} pitches...`);
+  addLog(`Writing ${unpitched.length} pitches...`, 'info');
+  try {
+    const newPitches = [];
+    for (const p of unpitched) {
+      const demo = REGIONAL_DEMOS[p.region] || REGIONAL_DEMOS.europe;
+      const today = new Date().toISOString().split('T')[0];
+      const raw = await callClaude(
+        'You write cold outreach pitches for GroundUp Web (groundupweb.com), a service that builds websites for BJJ/martial arts gyms in tourist cities. Return ONLY a valid JSON object. No markdown, no explanation. Start with { and end with }.',
+        `Write a cold pitch for this gym:
+Gym: ${p.gym_name}
+City: ${p.city}, ${p.country}
+Instructor: ${p.instructor || 'unknown'}
+Digital gap: ${p.digital_gap}
+Pitch angle: ${p.pitch_angle}
+Contact method: ${p.best_contact}
+Demo link: ${demo}
+
+Pitch rules:
+- Open with their specific digital problem
+- One sentence why it matters (travelers cannot find them)
+- Mention GroundUp Web and include the demo link: ${demo}
+- Low-friction close: offer to show what we would build, no price, no pressure
+- Sign off as Wes only
+- 4-5 sentences total
+- If Instagram or Facebook: casual DM style, shorter
+- If email: include a subject line
+
+Return ONLY this JSON object:
+{"gym_name":"${p.gym_name}","city":"${p.city}","country":"${p.country}","contact_method":"${p.best_contact}","contact_value":"${p['contact_' + p.best_contact] || ''}","subject":null,"body":"pitch text here","demo_link":"${demo}","date_written":"${today}"}`
+      );
+      const pitch = parseJSON(raw);
+      newPitches.push(pitch);
+      addLog(`  ✓ ${p.gym_name}`, 'success');
+    }
+    state.pitches = [...state.pitches, ...newPitches];
+    saveState();
+    renderPitchesList();
+    updateStats();
+    addLog(`✓ ${newPitches.length} pitches ready.`, 'success');
+  } catch(e) {
+    addLog(`✗ Error: ${e.message}`, 'error');
+  }
+  setRunning(false);
+}
+
+// ── STEP 4: Follow-ups ─────────────────────────────────────────────
+async function checkFollowUps() {
+  const due = state.prospects.filter(p => {
+    if (p.status !== 'contacted' || !p.date_contacted) return false;
+    return Math.floor((Date.now() - new Date(p.date_contacted)) / 86400000) >= 7;
+  });
+  if (due.length === 0) { addLog('No follow-ups due.', 'info'); return; }
+  addLog(`${due.length} follow-up(s) due. Writing messages...`, 'info');
+  setRunning(true, 'Writing follow-ups...');
+  for (const p of due) {
+    try {
+      const raw = await callClaude(
+        'Write brief follow-up messages for unanswered cold outreach. Return ONLY a valid JSON object. No markdown. Start with { and end with }.',
+        `Write a follow-up for ${p.gym_name} in ${p.city}. First contacted ${p.date_contacted} via ${p.best_contact}. No reply received. Keep it 2-3 sentences, friendly, not pushy. Sign as Wes.
+Return ONLY: {"body":"message text","subject":"subject line if email, else null"}`
+      );
+      const fu = parseJSON(raw);
+      const sent = await sendTelegram(
+        `🔔 <b>Follow-up Due</b>\n\n<b>${p.gym_name}</b> — ${p.city}, ${p.country}\nContacted: ${p.date_contacted} via ${p.best_contact}\n\n${fu.subject ? 'Subject: ' + fu.subject + '\n\n' : ''}${fu.body}`
+      );
+      if (sent) {
+        addLog(`✓ Telegram sent: ${p.gym_name}`, 'success');
+      } else {
+        // Store follow-up in pitch so it shows in pitches tab
+        state.pitches.push({
+          gym_name: p.gym_name + ' (follow-up)',
+          city: p.city,
+          country: p.country,
+          contact_method: p.best_contact,
+          contact_value: p['contact_' + p.best_contact] || '',
+          subject: fu.subject,
+          body: fu.body,
+          demo_link: '',
+          date_written: new Date().toISOString().split('T')[0],
+        });
+        saveState();
+        renderPitchesList();
+        addLog(`Follow-up ready for ${p.gym_name} — see Pitches tab`, 'warn');
+      }
+    } catch(e) {
+      addLog(`✗ ${p.gym_name}: ${e.message}`, 'error');
+    }
+  }
+  setRunning(false);
+}
+
+// ── Render prospects table ─────────────────────────────────────────
+function renderProspectsTable() {
+  const container = document.getElementById('prospectsTable');
+  if (state.prospects.length === 0) {
+    container.innerHTML = '<div class="empty">No prospects yet. Run Research from the Pipeline tab.</div>';
+    return;
+  }
+  const rows = state.prospects.map((p, i) => `
+    <tr>
+      <td><strong>${p.gym_name}</strong>${p.instructor ? `<div class="td-muted">${p.instructor}</div>` : ''}</td>
+      <td>${p.city}<div class="td-muted">${p.country}</div></td>
+      <td style="max-width:180px;font-size:11px;color:#777">${p.digital_gap}</td>
+      <td>
+        <div class="td-muted" style="text-transform:uppercase">${p.best_contact}</div>
+        <div style="font-size:11px;color:#aaa;margin-top:2px;word-break:break-all">${p['contact_' + p.best_contact] || '—'}</div>
+      </td>
+      <td>
+        <select class="status-select" onchange="updateProspectStatus(${i}, this.value)">
+          <option value="not_contacted" ${p.status==='not_contacted'?'selected':''}>Not contacted</option>
+          <option value="contacted" ${p.status==='contacted'?'selected':''}>Contacted</option>
+          <option value="replied" ${p.status==='replied'?'selected':''}>Replied</option>
+          <option value="won" ${p.status==='won'?'selected':''}>Won ✓</option>
+          <option value="lost" ${p.status==='lost'?'selected':''}>Lost</option>
+        </select>
+        ${p.date_contacted ? `<div style="font-size:9px;color:#444;margin-top:3px">${p.date_contacted}</div>` : ''}
+      </td>
+    </tr>
+  `).join('');
+  container.innerHTML = `
+    <table>
+      <thead><tr>
+        <th>Gym</th><th>City</th><th>Gap</th><th>Contact</th><th>Status</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+}
+
+function updateProspectStatus(index, status) {
+  state.prospects[index].status = status;
+  if (status === 'contacted') {
+    state.prospects[index].date_contacted = new Date().toISOString().split('T')[0];
+  }
+  saveState();
+  updateStats();
+}
+
+// ── Render pitches ─────────────────────────────────────────────────
+function renderPitchesList() {
+  const container = document.getElementById('pitchesList');
+  if (state.pitches.length === 0) {
+    container.innerHTML = '<div class="card empty">No pitches yet. Run Write Pitches from the Pipeline tab.</div>';
+    return;
+  }
+  container.innerHTML = state.pitches.map((p, i) => `
+    <div class="card">
+      <div class="pitch-header">
+        <div>
+          <div class="pitch-name">${p.gym_name}</div>
+          <div class="pitch-info">${p.city}, ${p.country} · ${p.contact_method}${p.contact_value ? ' · ' + p.contact_value : ''}</div>
+        </div>
+        <button class="btn-ghost" onclick="copyPitch(${i})">Copy & Mark Sent</button>
+      </div>
+      ${p.subject ? `<div class="pitch-subject">Subject: ${p.subject}</div>` : ''}
+      <div class="pitch-box">${p.body}</div>
+      ${p.demo_link ? `<div class="pitch-meta">Demo: ${p.demo_link}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+function copyPitch(index) {
+  const p = state.pitches[index];
+  const text = p.subject ? `Subject: ${p.subject}\n\n${p.body}` : p.body;
+  navigator.clipboard.writeText(text).catch(() => {
+    // Fallback for mobile
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  });
+  // Mark prospect as contacted
+  const prospect = state.prospects.find(pr => pr.gym_name === p.gym_name && pr.city === p.city);
+  if (prospect && prospect.status === 'not_contacted') {
+    prospect.status = 'contacted';
+    prospect.date_contacted = new Date().toISOString().split('T')[0];
+    saveState();
+    renderProspectsTable();
+    updateStats();
+  }
+  addLog(`Copied pitch for ${p.gym_name} and marked as contacted.`, 'success');
+  switchTab('pipeline', document.querySelector('.tab'));
+}
+
+// ── Render cities table ────────────────────────────────────────────
+function renderCitiesTable() {
+  const container = document.getElementById('citiesTable');
+  if (state.cities.length === 0) {
+    container.innerHTML = '<div class="empty">No cities yet. Generate from the Pipeline tab.</div>';
+    return;
+  }
+  const rows = state.cities.map(c => `
+    <tr>
+      <td><strong>${c.name}</strong></td>
+      <td>${c.country}</td>
+      <td style="font-size:11px;color:#666">${REGION_LABELS[c.region] || c.region}</td>
+      <td style="font-size:11px;color:#555;max-width:220px">${c.notes}</td>
+      <td>
+        <span class="${c.status === 'worked' ? 'city-worked' : 'city-unworked'}">${c.status}</span>
+        ${c.date_worked ? `<div style="font-size:9px;color:#333;margin-top:2px">${c.date_worked}</div>` : ''}
+      </td>
+    </tr>
+  `).join('');
+  container.innerHTML = `
+    <table>
+      <thead><tr>
+        <th>City</th><th>Country</th><th>Region</th><th>Notes</th><th>Status</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+}
+
+// ── Export ─────────────────────────────────────────────────────────
+function exportForContext() {
+  const citiesLeft = state.cities.filter(c => c.status === 'unworked').length;
+  const lines = [
+    '## GroundUp Prospects',
+    `Updated: ${new Date().toLocaleDateString()}`,
+    `Cities: ${state.cities.length} total · ${citiesLeft} remaining`,
+    '',
+    '| Gym | City | Contact | Status | Date |',
+    '|---|---|---|---|---|',
+    ...state.prospects.map(p =>
+      `| ${p.gym_name} | ${p.city}, ${p.country} | ${p.best_contact}: ${p['contact_' + p.best_contact] || '—'} | ${p.status} | ${p.date_contacted || p.date_found || ''} |`
+    )
+  ];
+  const text = lines.join('\n');
+  navigator.clipboard.writeText(text).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  });
+  const btn = document.getElementById('exportBtn');
+  btn.textContent = '✓ Copied!';
+  btn.className = 'btn-ghost green';
+  setTimeout(() => {
+    btn.textContent = '📋 Copy for CONTEXT.md';
+    btn.className = 'btn-ghost';
+  }, 3000);
+}
+
+// ── Settings ───────────────────────────────────────────────────────
+function openSettings() {
+  document.getElementById('inputTelegramToken').value = state.telegramToken || '';
+  document.getElementById('inputTelegramChatId').value = state.telegramChatId || '';
+  document.getElementById('settingsModal').classList.add('visible');
+}
+
+function closeSettings() {
+  document.getElementById('settingsModal').classList.remove('visible');
+}
+
+function saveSettings() {
+  state.telegramToken = document.getElementById('inputTelegramToken').value.trim();
+  state.telegramChatId = document.getElementById('inputTelegramChatId').value.trim();
+  saveState();
+  closeSettings();
+  addLog('Settings saved.', 'success');
+}
+
+// ── Tabs ───────────────────────────────────────────────────────────
+function switchTab(tab, el) {
+  ['pipeline','prospects','pitches','cities'].forEach(t => {
+    document.getElementById('tab-' + t).style.display = t === tab ? 'block' : 'none';
+  });
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  if (el) el.classList.add('active');
+}
+
+// ── Init ───────────────────────────────────────────────────────────
+loadState();
+updateStats();
+renderProspectsTable();
+renderPitchesList();
+renderCitiesTable();
+</script>
+</body>
+</html>
