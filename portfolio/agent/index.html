@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GroundUp Agent</title>
+<title>GroundUp Agent v2</title>
 <style>
   :root {
     --black: #0d0d0d;
@@ -16,7 +16,6 @@
     --gray2: #1a1a1a;
     --gray3: #222;
     --muted: #555;
-    --muted2: #777;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -30,7 +29,6 @@
     min-height: 100vh;
   }
 
-  /* HEADER */
   .header {
     background: var(--gray);
     border-bottom: 1px solid #1e1e1e;
@@ -46,11 +44,11 @@
 
   .logo { font-weight: 700; font-size: 13px; letter-spacing: 3px; }
   .logo span { color: var(--red); }
+  .logo small { font-size: 9px; color: var(--muted); letter-spacing: 2px; margin-left: 0.4rem; }
 
   .header-right { display: flex; gap: 0.8rem; align-items: center; }
   .follow-up-alert { font-size: 11px; color: var(--amber); }
 
-  /* TABS */
   .tabs {
     display: flex;
     border-bottom: 1px solid #1e1e1e;
@@ -65,19 +63,16 @@
     font-size: 11px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--muted);
+    color: #444;
     background: none;
     border: none;
     border-bottom: 2px solid transparent;
     white-space: nowrap;
-    color: #444;
   }
   .tab.active { color: var(--white); border-bottom-color: var(--red); }
 
-  /* MAIN */
   .main { padding: 1.5rem; }
 
-  /* STATS */
   .stats-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -89,9 +84,9 @@
   .stat { background: var(--gray); padding: 1rem; text-align: center; }
   .stat-num { font-size: 1.8rem; font-weight: 700; color: var(--red); line-height: 1; font-family: monospace; }
   .stat-num.warn { color: var(--amber); }
+  .stat-num.green { color: var(--green); }
   .stat-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-top: 0.2rem; }
 
-  /* PIPELINE GRID */
   .pipeline-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -99,7 +94,6 @@
     margin-bottom: 1rem;
   }
 
-  /* CARDS */
   .card {
     background: var(--gray);
     border: 1px solid #1e1e1e;
@@ -122,7 +116,6 @@
     margin-bottom: 1rem;
   }
 
-  /* BUTTONS */
   .btn {
     background: var(--red);
     color: var(--white);
@@ -142,6 +135,9 @@
   .btn.amber:hover { background: #c98900; }
   .btn.dark { background: #2a2a2a; }
   .btn.dark:hover { background: #333; }
+  .btn.green { background: var(--green); }
+  .btn.green:hover { background: #137a64; }
+  .btn.inline { width: auto; padding: 0.4rem 0.8rem; font-size: 10px; }
 
   .btn-ghost {
     background: none;
@@ -155,8 +151,10 @@
   }
   .btn-ghost:hover { border-color: #444; color: var(--white); }
   .btn-ghost.green { color: var(--green); border-color: #1a9e8244; }
+  .btn-ghost.red { color: var(--red); border-color: #e6332944; }
 
-  /* LOG */
+  .btn-row { display: flex; gap: 0.5rem; margin-top: 0.8rem; }
+
   .log {
     background: #0a0a0a;
     border: 1px solid #1a1a1a;
@@ -174,7 +172,6 @@
   .log-line.error { color: var(--red); }
   .log-empty { color: #2a2a2a; }
 
-  /* RUNNING BANNER */
   .running-banner {
     background: #1a1a08;
     border: 1px solid #f0a50022;
@@ -186,13 +183,11 @@
   }
   .running-banner.visible { display: block; }
 
-  /* TABLE */
   table { width: 100%; border-collapse: collapse; font-size: 12px; }
   th { text-align: left; padding: 0.5rem 0.7rem; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid #1e1e1e; font-weight: 400; }
   td { padding: 0.7rem; border-bottom: 1px solid #141414; vertical-align: top; }
   .td-muted { font-size: 10px; color: var(--muted); margin-top: 2px; }
 
-  /* STATUS SELECT */
   .status-select {
     background: #0a0a0a;
     border: 1px solid #2a2a2a;
@@ -203,7 +198,20 @@
     font-family: inherit;
   }
 
-  /* PITCH BOX */
+  .notes-input {
+    background: #0a0a0a;
+    border: 1px solid #1a1a1a;
+    color: #aaa;
+    padding: 0.3rem 0.5rem;
+    font-size: 11px;
+    font-family: inherit;
+    width: 100%;
+    margin-top: 0.3rem;
+    outline: none;
+    resize: none;
+  }
+  .notes-input:focus { border-color: #333; }
+
   .pitch-box {
     background: #0a0a0a;
     border: 1px solid #1e1e1e;
@@ -223,19 +231,15 @@
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 0.6rem;
+    gap: 0.5rem;
   }
 
   .pitch-name { font-weight: 500; }
   .pitch-info { font-size: 10px; color: var(--muted); margin-top: 2px; }
 
-  /* EXPORT */
-  .export-row {
-    text-align: right;
-    margin-top: 0.8rem;
-  }
+  .export-row { text-align: right; margin-top: 0.8rem; }
   .export-note { font-size: 10px; color: #333; margin-top: 0.3rem; }
 
-  /* MODAL */
   .modal {
     position: fixed;
     inset: 0;
@@ -251,8 +255,10 @@
     background: var(--gray);
     border: 1px solid #2a2a2a;
     padding: 1.8rem;
-    width: 440px;
+    width: 460px;
     max-width: 92vw;
+    max-height: 90vh;
+    overflow-y: auto;
   }
 
   .modal-title {
@@ -263,14 +269,6 @@
     margin-bottom: 1.5rem;
   }
 
-  .modal-section {
-    font-size: 10px;
-    color: var(--red);
-    letter-spacing: 1px;
-    margin-bottom: 1rem;
-    margin-top: -0.5rem;
-  }
-
   .modal-note {
     font-size: 10px;
     color: #333;
@@ -278,10 +276,9 @@
     line-height: 1.6;
   }
 
-  .modal-actions { display: flex; gap: 0.8rem; margin-top: 0.5rem; }
+  .modal-actions { display: flex; gap: 0.8rem; margin-top: 1rem; }
   .modal-actions .btn { flex: 1; }
 
-  /* FORM */
   label {
     font-size: 10px;
     letter-spacing: 2px;
@@ -292,7 +289,9 @@
   }
 
   input[type="text"],
-  input[type="password"] {
+  input[type="password"],
+  select.form-select,
+  textarea.form-textarea {
     background: #0a0a0a;
     border: 1px solid #2a2a2a;
     color: var(--white);
@@ -304,20 +303,17 @@
     margin-bottom: 1rem;
   }
 
-  input:focus { border-color: var(--red); }
+  select.form-select option { background: #0a0a0a; }
+  textarea.form-textarea { resize: vertical; min-height: 70px; }
 
-  /* EMPTY STATE */
-  .empty {
-    color: #2a2a2a;
-    text-align: center;
-    padding: 2rem;
-  }
+  input:focus, select.form-select:focus, textarea.form-textarea:focus { border-color: var(--red); }
 
-  /* CITY STATUS */
+  .empty { color: #2a2a2a; text-align: center; padding: 2rem; }
+
   .city-worked { font-size: 10px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
   .city-unworked { font-size: 10px; color: var(--green); letter-spacing: 1px; text-transform: uppercase; }
+  .city-skipped { font-size: 10px; color: #333; letter-spacing: 1px; text-transform: uppercase; }
 
-  /* LOG/CARD HEADER */
   .card-header {
     display: flex;
     justify-content: space-between;
@@ -325,27 +321,40 @@
     margin-bottom: 0.6rem;
   }
 
-  /* OVERFLOW */
   .overflow-x { overflow-x: auto; }
+
+  .badge {
+    display: inline-block;
+    padding: 0.1rem 0.4rem;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .badge.bad { background: #e6332922; color: var(--red); border: 1px solid #e6332944; }
+  .badge.manual { background: #1a9e8222; color: var(--green); border: 1px solid #1a9e8244; }
+
+  .prospect-row-bad { opacity: 0.4; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
 
   @media (max-width: 600px) {
     .pipeline-grid { grid-template-columns: 1fr; }
     .stats-grid { grid-template-columns: repeat(3, 1fr); }
+    .form-row { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header">
-  <div class="logo">GROUND<span>UP</span> AGENT</div>
+  <div class="logo">GROUND<span>UP</span> AGENT <small>v2</small></div>
   <div class="header-right">
     <span class="follow-up-alert" id="followUpAlert" style="display:none"></span>
+    <button class="btn-ghost" onclick="openAddProspect()">+ Prospect</button>
     <button class="btn-ghost" onclick="openSettings()">⚙ Settings</button>
   </div>
 </div>
 
-<!-- TABS -->
 <div class="tabs">
   <button class="tab active" onclick="switchTab('pipeline', this)">Pipeline</button>
   <button class="tab" onclick="switchTab('prospects', this)">Prospects</button>
@@ -353,7 +362,6 @@
   <button class="tab" onclick="switchTab('cities', this)">Cities</button>
 </div>
 
-<!-- MAIN -->
 <div class="main">
   <div class="running-banner" id="runningBanner">⟳ <span id="runningStep"></span></div>
 
@@ -370,17 +378,21 @@
     <div class="pipeline-grid">
       <div class="card">
         <div class="card-label">01 — City Queue</div>
-        <p class="card-desc" id="cityQueueDesc">Generate your list of 40 target cities. Only needs to run once.</p>
+        <p class="card-desc" id="cityQueueDesc">Generate your list of 20 target cities. Run again anytime to add more.</p>
         <button class="btn" id="btnCities" onclick="generateCities()">Generate Queue</button>
       </div>
       <div class="card">
         <div class="card-label">02 — Research City</div>
         <p class="card-desc" id="researchDesc">Web-searches the next city for qualifying gyms with weak digital presence.</p>
-        <button class="btn" id="btnResearch" onclick="researchNextCity()">Research Next City</button>
+        <div class="btn-row">
+          <button class="btn" id="btnResearch" onclick="researchNextCity()" style="flex:1">Research Next City</button>
+          <button class="btn dark inline" id="btnSkip" onclick="skipNextCity()" title="Skip this city">Skip</button>
+          <button class="btn dark inline" id="btnRetry" onclick="retryLastCity()" title="Retry last timed-out city" style="display:none">Retry</button>
+        </div>
       </div>
       <div class="card">
         <div class="card-label">03 — Write Pitches</div>
-        <p class="card-desc" id="pitchDesc">Writes personalized pitches for uncontacted prospects. Links correct regional demo automatically.</p>
+        <p class="card-desc" id="pitchDesc">Writes personalized pitches for uncontacted prospects. Links the correct regional demo automatically.</p>
         <button class="btn" id="btnPitches" onclick="writePitches()">Write Pitches</button>
       </div>
       <div class="card">
@@ -409,7 +421,10 @@
   <!-- PROSPECTS TAB -->
   <div id="tab-prospects" style="display:none">
     <div class="card">
-      <div class="card-label" id="prospectsTitle">All Prospects</div>
+      <div class="card-header">
+        <div class="card-label" id="prospectsTitle" style="margin-bottom:0">All Prospects</div>
+        <button class="btn-ghost" onclick="openAddProspect()">+ Add Manually</button>
+      </div>
       <div class="overflow-x" id="prospectsTable">
         <div class="empty">No prospects yet. Run Research from the Pipeline tab.</div>
       </div>
@@ -442,17 +457,75 @@
     <input type="password" id="inputTelegramToken" placeholder="123456:ABC-...">
     <label>Telegram Chat ID</label>
     <input type="text" id="inputTelegramChatId" placeholder="-100...">
-    <div class="modal-note" style="margin-bottom:1rem;margin-top:-0.5rem;color:#555;">Optional — needed for follow-up alerts on your phone.</div>
+    <div style="font-size:10px;color:#555;margin-bottom:1.2rem;margin-top:-0.5rem;">Optional — needed for follow-up alerts on your phone.</div>
     <div class="modal-actions">
       <button class="btn" onclick="saveSettings()">Save Settings</button>
-      <button class="btn-ghost" onclick="closeSettings()">Cancel</button>
+      <button class="btn-ghost" onclick="closeModal('settingsModal')">Cancel</button>
     </div>
-    <div class="modal-note">Settings are saved in your browser's localStorage for this device.</div>
+    <div class="modal-note">Settings saved in browser localStorage on this device.</div>
+  </div>
+</div>
+
+<!-- ADD PROSPECT MODAL -->
+<div class="modal" id="addProspectModal">
+  <div class="modal-box">
+    <div class="modal-title">Add Prospect Manually</div>
+
+    <div class="form-row">
+      <div>
+        <label>Gym Name *</label>
+        <input type="text" id="ap-gym" placeholder="MMA Zadar">
+      </div>
+      <div>
+        <label>Instructor</label>
+        <input type="text" id="ap-instructor" placeholder="Coach name (optional)">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div>
+        <label>City *</label>
+        <input type="text" id="ap-city" placeholder="Zadar">
+      </div>
+      <div>
+        <label>Country *</label>
+        <input type="text" id="ap-country" placeholder="Croatia">
+      </div>
+    </div>
+
+    <label>Region *</label>
+    <select class="form-select" id="ap-region">
+      <option value="mediterranean">Mediterranean / Adriatic</option>
+      <option value="europe">Europe</option>
+      <option value="southeast_asia">Southeast Asia</option>
+      <option value="latin_america">Latin America</option>
+    </select>
+
+    <label>Digital Gap *</label>
+    <input type="text" id="ap-gap" placeholder="No website, Facebook only">
+
+    <label>Best Contact Method *</label>
+    <select class="form-select" id="ap-best-contact">
+      <option value="instagram">Instagram</option>
+      <option value="facebook">Facebook</option>
+      <option value="email">Email</option>
+      <option value="whatsapp">WhatsApp</option>
+    </select>
+
+    <label>Contact Value</label>
+    <input type="text" id="ap-contact-value" placeholder="@handle, email, or number">
+
+    <label>Notes</label>
+    <textarea class="form-textarea" id="ap-notes" placeholder="Anything useful to remember about this prospect..."></textarea>
+
+    <div class="modal-actions">
+      <button class="btn green" onclick="addProspectManually()">Add Prospect</button>
+      <button class="btn-ghost" onclick="closeModal('addProspectModal')">Cancel</button>
+    </div>
   </div>
 </div>
 
 <script>
-// ── State ──────────────────────────────────────────────────────────
 const REGIONAL_DEMOS = {
   mediterranean: 'https://groundupweb.com/examples/bjj-saranda.html',
   southeast_asia: 'https://groundupweb.com/examples/bjj-canggu.html',
@@ -473,28 +546,20 @@ let state = {
   pitches: [],
   telegramToken: '',
   telegramChatId: '',
+  lastFailedCity: null,
 };
 
 let running = false;
 
 // ── Persistence ────────────────────────────────────────────────────
 function saveState() {
-  localStorage.setItem('groundup_state', JSON.stringify({
-    cities: state.cities,
-    prospects: state.prospects,
-    pitches: state.pitches,
-    telegramToken: state.telegramToken,
-    telegramChatId: state.telegramChatId,
-  }));
+  localStorage.setItem('groundup_state', JSON.stringify(state));
 }
 
 function loadState() {
   try {
     const saved = localStorage.getItem('groundup_state');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      state = { ...state, ...parsed };
-    }
+    if (saved) state = { ...state, ...JSON.parse(saved) };
   } catch(e) { console.error('Load state error:', e); }
 }
 
@@ -502,49 +567,39 @@ function loadState() {
 async function callClaude(systemPrompt, userPrompt, useWebSearch = false) {
   const body = {
     model: 'claude-sonnet-4-20250514',
-    max_tokens: 1000,
+    max_tokens: 4000,
     system: systemPrompt,
     messages: [{ role: 'user', content: userPrompt }],
   };
   if (useWebSearch) {
     body.tools = [{ type: 'web_search_20250305', name: 'web_search' }];
   }
-
   const res = await fetch('/.netlify/functions/claude', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
-
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
     throw new Error(err.error?.message || `API error ${res.status}`);
   }
-
   const data = await res.json();
-  return data.content
-    .filter(b => b.type === 'text')
-    .map(b => b.text)
-    .join('');
+  return data.content.filter(b => b.type === 'text').map(b => b.text).join('');
 }
 
 function parseJSON(raw) {
-  // Strip markdown code fences
   let clean = raw.replace(/```json\s*/gi, '').replace(/```\s*/g, '').trim();
-  // Try direct parse
   try { return JSON.parse(clean); } catch {}
-  // Try extracting first array or object
   const arrMatch = clean.match(/\[[\s\S]*\]/);
   if (arrMatch) { try { return JSON.parse(arrMatch[0]); } catch {} }
   const objMatch = clean.match(/\{[\s\S]*\}/);
   if (objMatch) { try { return JSON.parse(objMatch[0]); } catch {} }
-  // Last resort: find JSON between first [ and last ]
   const start = clean.indexOf('[');
   const end = clean.lastIndexOf(']');
   if (start !== -1 && end !== -1 && end > start) {
     try { return JSON.parse(clean.slice(start, end + 1)); } catch {}
   }
-  throw new Error('Could not parse JSON from response. Raw: ' + clean.slice(0, 100));
+  throw new Error('Could not parse JSON. Raw: ' + clean.slice(0, 100));
 }
 
 // ── Telegram ───────────────────────────────────────────────────────
@@ -567,8 +622,7 @@ function addLog(msg, type = 'info') {
   if (empty) empty.remove();
   const line = document.createElement('div');
   line.className = `log-line ${type}`;
-  const ts = new Date().toLocaleTimeString();
-  line.textContent = `[${ts}] ${msg}`;
+  line.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
   log.appendChild(line);
   log.scrollTop = log.scrollHeight;
 }
@@ -580,10 +634,9 @@ function clearLog() {
 // ── Running state ──────────────────────────────────────────────────
 function setRunning(isRunning, step = '') {
   running = isRunning;
-  const banner = document.getElementById('runningBanner');
   document.getElementById('runningStep').textContent = step;
-  banner.classList.toggle('visible', isRunning);
-  ['btnCities','btnResearch','btnPitches','btnFollowUp'].forEach(id => {
+  document.getElementById('runningBanner').classList.toggle('visible', isRunning);
+  ['btnCities','btnResearch','btnPitches','btnFollowUp','btnSkip'].forEach(id => {
     const btn = document.getElementById(id);
     if (btn) btn.disabled = isRunning;
   });
@@ -593,13 +646,14 @@ function setRunning(isRunning, step = '') {
 function updateStats() {
   const citiesLeft = state.cities.filter(c => c.status === 'unworked').length;
   const contacted = state.prospects.filter(p => p.status === 'contacted').length;
+  const activeProspects = state.prospects.filter(p => p.status !== 'bad_data');
   const followUpsDue = state.prospects.filter(p => {
     if (p.status !== 'contacted' || !p.date_contacted) return false;
     return Math.floor((Date.now() - new Date(p.date_contacted)) / 86400000) >= 7;
   }).length;
 
   document.getElementById('stat-cities').textContent = citiesLeft;
-  document.getElementById('stat-prospects').textContent = state.prospects.length;
+  document.getElementById('stat-prospects').textContent = activeProspects.length;
   document.getElementById('stat-pitches').textContent = state.pitches.length;
   document.getElementById('stat-contacted').textContent = contacted;
 
@@ -608,33 +662,32 @@ function updateStats() {
   fuEl.className = 'stat-num' + (followUpsDue > 0 ? ' warn' : '');
 
   const alert = document.getElementById('followUpAlert');
-  if (followUpsDue > 0) {
-    alert.textContent = `⚠ ${followUpsDue} follow-up${followUpsDue > 1 ? 's' : ''} due`;
-    alert.style.display = 'inline';
-  } else {
-    alert.style.display = 'none';
-  }
+  alert.textContent = followUpsDue > 0 ? `⚠ ${followUpsDue} follow-up${followUpsDue > 1 ? 's' : ''} due` : '';
+  alert.style.display = followUpsDue > 0 ? 'inline' : 'none';
 
-  // Update button states
   document.getElementById('btnResearch').disabled = running || citiesLeft === 0;
-  const btnFU = document.getElementById('btnFollowUp');
-  if (followUpsDue > 0) {
-    btnFU.className = 'btn amber';
-  } else {
-    btnFU.className = 'btn dark';
-  }
+  document.getElementById('btnSkip').disabled = running || citiesLeft === 0;
 
-  // City queue desc
+  const btnFU = document.getElementById('btnFollowUp');
+  btnFU.className = followUpsDue > 0 ? 'btn amber' : 'btn dark';
+
   const nextCity = state.cities.find(c => c.status === 'unworked');
   document.getElementById('cityQueueDesc').textContent = state.cities.length === 0
-    ? 'Generate your list of 40 target cities. Only needs to run once.'
+    ? 'Generate your list of 20 target cities. Run again anytime to add more.'
     : `${citiesLeft} cities remaining. Next: ${nextCity?.name || '—'}`;
-
   document.getElementById('btnCities').textContent = state.cities.length === 0 ? 'Generate Queue' : 'Add More Cities';
 
-  // Cities title
+  // Show retry button if there's a last failed city
+  const retryBtn = document.getElementById('btnRetry');
+  if (state.lastFailedCity) {
+    retryBtn.style.display = 'inline-block';
+    retryBtn.title = `Retry: ${state.lastFailedCity.name}`;
+  } else {
+    retryBtn.style.display = 'none';
+  }
+
   document.getElementById('citiesTitle').textContent = `City Queue — ${state.cities.length} total · ${citiesLeft} remaining`;
-  document.getElementById('prospectsTitle').textContent = `All Prospects (${state.prospects.length})`;
+  document.getElementById('prospectsTitle').textContent = `All Prospects (${activeProspects.length}${state.prospects.length !== activeProspects.length ? ' active' : ''})`;
 }
 
 // ── STEP 1: Generate cities ────────────────────────────────────────
@@ -644,80 +697,104 @@ async function generateCities() {
   try {
     const existing = state.cities.map(c => c.name).join(', ');
     const raw = await callClaude(
-      'You are a research assistant identifying target cities for a web services business. Return ONLY a valid JSON array. No markdown, no explanation, no preamble. Start your response with [ and end with ].',
-      `Generate a JSON array of 20 tourist cities ideal for a business building websites for BJJ/martial arts gyms. Requirements:
-- High English-speaking tourist traffic
-- Coastal or culturally significant destinations  
-- Cover these regions: Adriatic, Mediterranean, Southeast Asia, Latin America, English-speaking Europe
-- Cities where local small businesses likely have weak digital presence
-- BJJ and martial arts are practiced there
-${existing ? `\nDo NOT include these cities already in queue: ${existing}` : ''}
-
-Return ONLY this JSON array with no other text:
-[{"name":"City Name","country":"Country Name","region":"mediterranean","tourist_volume":"high","notes":"one sentence why good target"}]
-
-Region must be one of: mediterranean, southeast_asia, latin_america, europe`
+      'You are a research assistant. Return ONLY a valid JSON array. No markdown, no explanation. Start with [ and end with ].',
+      `Generate a JSON array of 20 tourist cities ideal for a business building websites for BJJ/martial arts gyms.
+Requirements: high English-speaking tourist traffic, coastal or culturally significant, cover Adriatic/Mediterranean/Southeast Asia/Latin America/English-speaking Europe, local businesses likely have weak digital presence.
+${existing ? `\nDo NOT include: ${existing}` : ''}
+Return ONLY:
+[{"name":"City","country":"Country","region":"mediterranean","tourist_volume":"high","notes":"why good target"}]
+region must be: mediterranean, southeast_asia, latin_america, or europe`
     );
     const newCities = parseJSON(raw).map(c => ({ ...c, status: 'unworked' }));
     state.cities = [...state.cities, ...newCities];
     saveState();
     renderCitiesTable();
     updateStats();
-    addLog(`✓ Generated ${newCities.length} cities. ${state.cities.length} total in queue.`, 'success');
+    addLog(`✓ Added ${newCities.length} cities. ${state.cities.filter(c=>c.status==='unworked').length} remaining.`, 'success');
   } catch(e) {
     addLog(`✗ Error: ${e.message}`, 'error');
   }
   setRunning(false);
 }
 
-// ── STEP 2: Research next city ─────────────────────────────────────
-async function researchNextCity() {
-  const next = state.cities.find(c => c.status === 'unworked');
-  if (!next) { addLog('No unworked cities. Generate more first.', 'warn'); return; }
-  setRunning(true, `Researching ${next.name}...`);
-  addLog(`Researching ${next.name}, ${next.country}...`, 'info');
+// ── STEP 2: Research city ──────────────────────────────────────────
+async function doResearch(city) {
+  setRunning(true, `Researching ${city.name}...`);
+  addLog(`Researching ${city.name}, ${city.country}...`, 'info');
   try {
     const today = new Date().toISOString().split('T')[0];
     const raw = await callClaude(
-      'You find BJJ/martial arts gyms with weak or missing digital presence in tourist cities. Return ONLY a valid JSON array. No markdown, no explanation. Start with [ and end with ].',
-      `Search for BJJ gyms, Brazilian Jiu-Jitsu academies, and martial arts schools in ${next.name}, ${next.country}.
-
-Only include gyms that have WEAK or MISSING digital presence: no website, website not in English, outdated website, or missing Google Business listing.
-
-Return ONLY this JSON array (empty array [] if none found):
-[{"gym_name":"Name","city":"${next.name}","country":"${next.country}","region":"${next.region}","instructor":null,"digital_gap":"specific description of what is missing","contact_email":null,"contact_instagram":null,"contact_facebook":null,"contact_whatsapp":null,"best_contact":"email","pitch_angle":"specific hook for pitch","date_found":"${today}","status":"not_contacted"}]
-
-best_contact must be one of: email, instagram, facebook, whatsapp
-Return maximum 6 prospects.`,
+      'You find BJJ/martial arts gyms with weak or missing digital presence in tourist cities. Return ONLY a valid JSON array. No markdown. Start with [ and end with ].',
+      `Search for BJJ gyms, Brazilian Jiu-Jitsu academies, and martial arts schools in ${city.name}, ${city.country}.
+Only include gyms with WEAK or MISSING digital presence: no website, not in English, outdated, or missing Google listing.
+Return ONLY (empty [] if none found):
+[{"gym_name":"Name","city":"${city.name}","country":"${city.country}","region":"${city.region}","instructor":null,"digital_gap":"specific gap","contact_email":null,"contact_instagram":null,"contact_facebook":null,"contact_whatsapp":null,"best_contact":"email","pitch_angle":"specific hook","date_found":"${today}","status":"not_contacted","notes":"","manual":false}]
+best_contact must be: email, instagram, facebook, or whatsapp. Max 6 prospects.`,
       true
     );
     const found = parseJSON(raw);
-    // Mark city as worked
     state.cities = state.cities.map(c =>
-      c.name === next.name && c.country === next.country
+      c.name === city.name && c.country === city.country
         ? { ...c, status: 'worked', date_worked: new Date().toISOString().split('T')[0] }
         : c
     );
+    state.lastFailedCity = null;
     if (found.length === 0) {
-      addLog(`No qualifying prospects in ${next.name}. City marked worked.`, 'warn');
+      addLog(`No qualifying prospects in ${city.name}. City marked worked.`, 'warn');
     } else {
       state.prospects = [...state.prospects, ...found];
-      addLog(`✓ Found ${found.length} prospects in ${next.name}.`, 'success');
+      addLog(`✓ Found ${found.length} prospects in ${city.name}.`, 'success');
     }
     saveState();
     renderProspectsTable();
     renderCitiesTable();
     updateStats();
   } catch(e) {
-    addLog(`✗ Error: ${e.message}`, 'error');
+    // Store failed city for retry
+    state.lastFailedCity = city;
+    saveState();
+    updateStats();
+    addLog(`✗ Error researching ${city.name}: ${e.message}`, 'error');
+    if (e.message.includes('504') || e.message.includes('timeout') || e.message.includes('rate limit')) {
+      addLog(`↩ Use the Retry button to try ${city.name} again, or Skip to move on.`, 'warn');
+    }
   }
   setRunning(false);
+}
+
+async function researchNextCity() {
+  const next = state.cities.find(c => c.status === 'unworked');
+  if (!next) { addLog('No unworked cities. Generate more first.', 'warn'); return; }
+  await doResearch(next);
+}
+
+async function retryLastCity() {
+  if (!state.lastFailedCity) { addLog('No failed city to retry.', 'warn'); return; }
+  addLog(`Retrying ${state.lastFailedCity.name}...`, 'info');
+  await doResearch(state.lastFailedCity);
+}
+
+function skipNextCity() {
+  const next = state.cities.find(c => c.status === 'unworked');
+  if (!next) { addLog('No cities to skip.', 'warn'); return; }
+  state.cities = state.cities.map(c =>
+    c.name === next.name && c.country === next.country
+      ? { ...c, status: 'skipped', date_worked: new Date().toISOString().split('T')[0] }
+      : c
+  );
+  // Also clear lastFailedCity if it matches
+  if (state.lastFailedCity?.name === next.name) state.lastFailedCity = null;
+  saveState();
+  renderCitiesTable();
+  updateStats();
+  addLog(`Skipped ${next.name}. Moving to next city.`, 'warn');
 }
 
 // ── STEP 3: Write pitches ──────────────────────────────────────────
 async function writePitches() {
   const unpitched = state.prospects.filter(p =>
     p.status === 'not_contacted' &&
+    p.status !== 'bad_data' &&
     !state.pitches.find(pi => pi.gym_name === p.gym_name && pi.city === p.city)
   );
   if (unpitched.length === 0) { addLog('No new prospects to pitch.', 'warn'); return; }
@@ -729,28 +806,19 @@ async function writePitches() {
       const demo = REGIONAL_DEMOS[p.region] || REGIONAL_DEMOS.europe;
       const today = new Date().toISOString().split('T')[0];
       const raw = await callClaude(
-        'You write cold outreach pitches for GroundUp Web (groundupweb.com), a service that builds websites for BJJ/martial arts gyms in tourist cities. Return ONLY a valid JSON object. No markdown, no explanation. Start with { and end with }.',
-        `Write a cold pitch for this gym:
-Gym: ${p.gym_name}
-City: ${p.city}, ${p.country}
+        'You write cold outreach pitches for GroundUp Web (groundupweb.com), a service building websites for BJJ/martial arts gyms in tourist cities. Return ONLY a valid JSON object. No markdown. Start with { and end with }.',
+        `Write a cold pitch for:
+Gym: ${p.gym_name}, ${p.city}, ${p.country}
 Instructor: ${p.instructor || 'unknown'}
-Digital gap: ${p.digital_gap}
-Pitch angle: ${p.pitch_angle}
-Contact method: ${p.best_contact}
-Demo link: ${demo}
+Gap: ${p.digital_gap}
+Angle: ${p.pitch_angle}
+Contact: ${p.best_contact}
+Demo: ${demo}
 
-Pitch rules:
-- Open with their specific digital problem
-- One sentence why it matters (travelers cannot find them)
-- Mention GroundUp Web and include the demo link: ${demo}
-- Low-friction close: offer to show what we would build, no price, no pressure
-- Sign off as Wes only
-- 4-5 sentences total
-- If Instagram or Facebook: casual DM style, shorter
-- If email: include a subject line
+Rules: Lead with specific problem. One sentence why it matters (travelers can't find them). Mention GroundUp Web + demo link. Low-friction close, no price. Sign as Wes only. 4-5 sentences. Instagram/Facebook = casual DM. Email = include subject line.
 
-Return ONLY this JSON object:
-{"gym_name":"${p.gym_name}","city":"${p.city}","country":"${p.country}","contact_method":"${p.best_contact}","contact_value":"${p['contact_' + p.best_contact] || ''}","subject":null,"body":"pitch text here","demo_link":"${demo}","date_written":"${today}"}`
+Return ONLY:
+{"gym_name":"${p.gym_name}","city":"${p.city}","country":"${p.country}","contact_method":"${p.best_contact}","contact_value":"${p['contact_' + p.best_contact] || ''}","subject":null,"body":"pitch text","demo_link":"${demo}","date_written":"${today}","sent_via":null}`
       );
       const pitch = parseJSON(raw);
       newPitches.push(pitch);
@@ -780,8 +848,8 @@ async function checkFollowUps() {
     try {
       const raw = await callClaude(
         'Write brief follow-up messages for unanswered cold outreach. Return ONLY a valid JSON object. No markdown. Start with { and end with }.',
-        `Write a follow-up for ${p.gym_name} in ${p.city}. First contacted ${p.date_contacted} via ${p.best_contact}. No reply received. Keep it 2-3 sentences, friendly, not pushy. Sign as Wes.
-Return ONLY: {"body":"message text","subject":"subject line if email, else null"}`
+        `Follow-up for ${p.gym_name}, ${p.city}. Contacted ${p.date_contacted} via ${p.best_contact}. No reply. 2-3 sentences, friendly, not pushy. Sign as Wes.
+Return ONLY: {"body":"message","subject":"subject if email else null"}`
       );
       const fu = parseJSON(raw);
       const sent = await sendTelegram(
@@ -790,17 +858,13 @@ Return ONLY: {"body":"message text","subject":"subject line if email, else null"
       if (sent) {
         addLog(`✓ Telegram sent: ${p.gym_name}`, 'success');
       } else {
-        // Store follow-up in pitch so it shows in pitches tab
         state.pitches.push({
           gym_name: p.gym_name + ' (follow-up)',
-          city: p.city,
-          country: p.country,
+          city: p.city, country: p.country,
           contact_method: p.best_contact,
           contact_value: p['contact_' + p.best_contact] || '',
-          subject: fu.subject,
-          body: fu.body,
-          demo_link: '',
-          date_written: new Date().toISOString().split('T')[0],
+          subject: fu.subject, body: fu.body,
+          demo_link: '', date_written: new Date().toISOString().split('T')[0], sent_via: null,
         });
         saveState();
         renderPitchesList();
@@ -813,21 +877,112 @@ Return ONLY: {"body":"message text","subject":"subject line if email, else null"
   setRunning(false);
 }
 
-// ── Render prospects table ─────────────────────────────────────────
+// ── Prospect status & notes ────────────────────────────────────────
+function updateProspectStatus(index, status) {
+  state.prospects[index].status = status;
+  if (status === 'contacted' && !state.prospects[index].date_contacted) {
+    state.prospects[index].date_contacted = new Date().toISOString().split('T')[0];
+  }
+  saveState();
+  updateStats();
+}
+
+function updateProspectNotes(index, notes) {
+  state.prospects[index].notes = notes;
+  saveState();
+}
+
+function updateProspectSentVia(index, method) {
+  state.prospects[index].sent_via = method;
+  saveState();
+}
+
+function flagBadData(index) {
+  if (confirm(`Mark "${state.prospects[index].gym_name}" as bad data / doesn't exist?`)) {
+    state.prospects[index].status = 'bad_data';
+    saveState();
+    renderProspectsTable();
+    updateStats();
+    addLog(`Flagged ${state.prospects[index].gym_name} as bad data.`, 'warn');
+  }
+}
+
+// ── Add prospect manually ──────────────────────────────────────────
+function openAddProspect() {
+  // Clear form
+  ['ap-gym','ap-instructor','ap-city','ap-country','ap-contact-value','ap-notes'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('addProspectModal').classList.add('visible');
+}
+
+function addProspectManually() {
+  const gym = document.getElementById('ap-gym').value.trim();
+  const city = document.getElementById('ap-city').value.trim();
+  const country = document.getElementById('ap-country').value.trim();
+  const gap = document.getElementById('ap-gap').value.trim();
+  if (!gym || !city || !country || !gap) {
+    alert('Please fill in Gym Name, City, Country, and Digital Gap.');
+    return;
+  }
+  const bestContact = document.getElementById('ap-best-contact').value;
+  const contactValue = document.getElementById('ap-contact-value').value.trim();
+  const region = document.getElementById('ap-region').value;
+  const prospect = {
+    gym_name: gym,
+    city, country, region,
+    instructor: document.getElementById('ap-instructor').value.trim() || null,
+    digital_gap: gap,
+    contact_email: bestContact === 'email' ? contactValue : null,
+    contact_instagram: bestContact === 'instagram' ? contactValue : null,
+    contact_facebook: bestContact === 'facebook' ? contactValue : null,
+    contact_whatsapp: bestContact === 'whatsapp' ? contactValue : null,
+    best_contact: bestContact,
+    pitch_angle: gap,
+    date_found: new Date().toISOString().split('T')[0],
+    status: 'not_contacted',
+    notes: document.getElementById('ap-notes').value.trim(),
+    manual: true,
+  };
+  state.prospects.push(prospect);
+  saveState();
+  renderProspectsTable();
+  updateStats();
+  closeModal('addProspectModal');
+  addLog(`✓ Manually added: ${gym}, ${city}`, 'success');
+}
+
+// ── Render prospects ───────────────────────────────────────────────
 function renderProspectsTable() {
   const container = document.getElementById('prospectsTable');
   if (state.prospects.length === 0) {
-    container.innerHTML = '<div class="empty">No prospects yet. Run Research from the Pipeline tab.</div>';
+    container.innerHTML = '<div class="empty">No prospects yet. Run Research or add manually.</div>';
     return;
   }
   const rows = state.prospects.map((p, i) => `
-    <tr>
-      <td><strong>${p.gym_name}</strong>${p.instructor ? `<div class="td-muted">${p.instructor}</div>` : ''}</td>
+    <tr class="${p.status === 'bad_data' ? 'prospect-row-bad' : ''}">
+      <td>
+        <strong>${p.gym_name}</strong>
+        ${p.manual ? '<span class="badge manual">manual</span>' : ''}
+        ${p.status === 'bad_data' ? '<span class="badge bad">bad data</span>' : ''}
+        ${p.instructor ? `<div class="td-muted">${p.instructor}</div>` : ''}
+      </td>
       <td>${p.city}<div class="td-muted">${p.country}</div></td>
-      <td style="max-width:180px;font-size:11px;color:#777">${p.digital_gap}</td>
+      <td style="max-width:160px;font-size:11px;color:#777">${p.digital_gap}</td>
       <td>
         <div class="td-muted" style="text-transform:uppercase">${p.best_contact}</div>
         <div style="font-size:11px;color:#aaa;margin-top:2px;word-break:break-all">${p['contact_' + p.best_contact] || '—'}</div>
+        ${p.status === 'contacted' ? `
+        <div style="margin-top:0.4rem">
+          <div class="td-muted">Sent via:</div>
+          <select class="status-select" onchange="updateProspectSentVia(${i}, this.value)" style="margin-top:2px">
+            <option value="">— select —</option>
+            <option value="email" ${p.sent_via==='email'?'selected':''}>Email</option>
+            <option value="instagram" ${p.sent_via==='instagram'?'selected':''}>Instagram</option>
+            <option value="facebook" ${p.sent_via==='facebook'?'selected':''}>Facebook</option>
+            <option value="whatsapp" ${p.sent_via==='whatsapp'?'selected':''}>WhatsApp</option>
+          </select>
+        </div>` : ''}
       </td>
       <td>
         <select class="status-select" onchange="updateProspectStatus(${i}, this.value)">
@@ -836,28 +991,21 @@ function renderProspectsTable() {
           <option value="replied" ${p.status==='replied'?'selected':''}>Replied</option>
           <option value="won" ${p.status==='won'?'selected':''}>Won ✓</option>
           <option value="lost" ${p.status==='lost'?'selected':''}>Lost</option>
+          <option value="bad_data" ${p.status==='bad_data'?'selected':''}>Bad data</option>
         </select>
         ${p.date_contacted ? `<div style="font-size:9px;color:#444;margin-top:3px">${p.date_contacted}</div>` : ''}
+        <textarea class="notes-input" rows="2" placeholder="Notes..." onchange="updateProspectNotes(${i}, this.value)">${p.notes || ''}</textarea>
       </td>
     </tr>
   `).join('');
   container.innerHTML = `
     <table>
       <thead><tr>
-        <th>Gym</th><th>City</th><th>Gap</th><th>Contact</th><th>Status</th>
+        <th>Gym</th><th>City</th><th>Gap</th><th>Contact</th><th>Status / Notes</th>
       </tr></thead>
       <tbody>${rows}</tbody>
     </table>
   `;
-}
-
-function updateProspectStatus(index, status) {
-  state.prospects[index].status = status;
-  if (status === 'contacted') {
-    state.prospects[index].date_contacted = new Date().toISOString().split('T')[0];
-  }
-  saveState();
-  updateStats();
 }
 
 // ── Render pitches ─────────────────────────────────────────────────
@@ -873,12 +1021,19 @@ function renderPitchesList() {
         <div>
           <div class="pitch-name">${p.gym_name}</div>
           <div class="pitch-info">${p.city}, ${p.country} · ${p.contact_method}${p.contact_value ? ' · ' + p.contact_value : ''}</div>
+          ${p.sent_via ? `<div style="font-size:10px;color:var(--green);margin-top:2px">Sent via ${p.sent_via}</div>` : ''}
         </div>
         <button class="btn-ghost" onclick="copyPitch(${i})">Copy & Mark Sent</button>
       </div>
       ${p.subject ? `<div class="pitch-subject">Subject: ${p.subject}</div>` : ''}
       <div class="pitch-box">${p.body}</div>
       ${p.demo_link ? `<div class="pitch-meta">Demo: ${p.demo_link}</div>` : ''}
+      <div style="margin-top:0.6rem;display:flex;gap:0.4rem;align-items:center;flex-wrap:wrap">
+        <span style="font-size:10px;color:var(--muted)">Sent via:</span>
+        ${['email','instagram','facebook','whatsapp'].map(m => `
+          <button class="btn-ghost" style="font-size:9px;padding:0.2rem 0.5rem;${p.sent_via===m?'border-color:var(--green);color:var(--green)':''}" onclick="markPitchSentVia(${i},'${m}')">${m}</button>
+        `).join('')}
+      </div>
     </div>
   `).join('');
 }
@@ -887,43 +1042,48 @@ function copyPitch(index) {
   const p = state.pitches[index];
   const text = p.subject ? `Subject: ${p.subject}\n\n${p.body}` : p.body;
   navigator.clipboard.writeText(text).catch(() => {
-    // Fallback for mobile
     const ta = document.createElement('textarea');
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
   });
-  // Mark prospect as contacted
   const prospect = state.prospects.find(pr => pr.gym_name === p.gym_name && pr.city === p.city);
   if (prospect && prospect.status === 'not_contacted') {
     prospect.status = 'contacted';
     prospect.date_contacted = new Date().toISOString().split('T')[0];
-    saveState();
-    renderProspectsTable();
-    updateStats();
+    saveState(); renderProspectsTable(); updateStats();
   }
-  addLog(`Copied pitch for ${p.gym_name} and marked as contacted.`, 'success');
-  switchTab('pipeline', document.querySelector('.tab'));
+  addLog(`Copied pitch for ${p.gym_name}.`, 'success');
 }
 
-// ── Render cities table ────────────────────────────────────────────
+function markPitchSentVia(pitchIndex, method) {
+  state.pitches[pitchIndex].sent_via = method;
+  // Also update on prospect
+  const p = state.pitches[pitchIndex];
+  const prospect = state.prospects.find(pr => pr.gym_name === p.gym_name && pr.city === p.city);
+  if (prospect) prospect.sent_via = method;
+  saveState();
+  renderPitchesList();
+  renderProspectsTable();
+}
+
+// ── Render cities ──────────────────────────────────────────────────
 function renderCitiesTable() {
   const container = document.getElementById('citiesTable');
   if (state.cities.length === 0) {
     container.innerHTML = '<div class="empty">No cities yet. Generate from the Pipeline tab.</div>';
     return;
   }
-  const rows = state.cities.map(c => `
+  const rows = state.cities.map((c, i) => `
     <tr>
       <td><strong>${c.name}</strong></td>
       <td>${c.country}</td>
       <td style="font-size:11px;color:#666">${REGION_LABELS[c.region] || c.region}</td>
-      <td style="font-size:11px;color:#555;max-width:220px">${c.notes}</td>
+      <td style="font-size:11px;color:#555;max-width:200px">${c.notes}</td>
       <td>
-        <span class="${c.status === 'worked' ? 'city-worked' : 'city-unworked'}">${c.status}</span>
+        <span class="${c.status === 'worked' ? 'city-worked' : c.status === 'skipped' ? 'city-skipped' : 'city-unworked'}">${c.status}</span>
         ${c.date_worked ? `<div style="font-size:9px;color:#333;margin-top:2px">${c.date_worked}</div>` : ''}
+        ${c.status === 'unworked' ? `<button class="btn-ghost" style="font-size:9px;padding:0.15rem 0.4rem;margin-top:4px" onclick="skipCity(${i})">skip</button>` : ''}
+        ${c.status === 'skipped' ? `<button class="btn-ghost" style="font-size:9px;padding:0.15rem 0.4rem;margin-top:4px" onclick="unskipCity(${i})">restore</button>` : ''}
       </td>
     </tr>
   `).join('');
@@ -937,6 +1097,20 @@ function renderCitiesTable() {
   `;
 }
 
+function skipCity(index) {
+  state.cities[index].status = 'skipped';
+  state.cities[index].date_worked = new Date().toISOString().split('T')[0];
+  saveState(); renderCitiesTable(); updateStats();
+  addLog(`Skipped ${state.cities[index].name}.`, 'warn');
+}
+
+function unskipCity(index) {
+  state.cities[index].status = 'unworked';
+  delete state.cities[index].date_worked;
+  saveState(); renderCitiesTable(); updateStats();
+  addLog(`Restored ${state.cities[index].name} to queue.`, 'info');
+}
+
 // ── Export ─────────────────────────────────────────────────────────
 function exportForContext() {
   const citiesLeft = state.cities.filter(c => c.status === 'unworked').length;
@@ -945,47 +1119,40 @@ function exportForContext() {
     `Updated: ${new Date().toLocaleDateString()}`,
     `Cities: ${state.cities.length} total · ${citiesLeft} remaining`,
     '',
-    '| Gym | City | Contact | Status | Date |',
-    '|---|---|---|---|---|',
-    ...state.prospects.map(p =>
-      `| ${p.gym_name} | ${p.city}, ${p.country} | ${p.best_contact}: ${p['contact_' + p.best_contact] || '—'} | ${p.status} | ${p.date_contacted || p.date_found || ''} |`
-    )
+    '| Gym | City | Contact | Sent Via | Status | Notes | Date |',
+    '|---|---|---|---|---|---|---|',
+    ...state.prospects
+      .filter(p => p.status !== 'bad_data')
+      .map(p => `| ${p.gym_name} | ${p.city}, ${p.country} | ${p.best_contact}: ${p['contact_' + p.best_contact]||'—'} | ${p.sent_via||'—'} | ${p.status} | ${p.notes||''} | ${p.date_contacted||p.date_found||''} |`)
   ];
   const text = lines.join('\n');
   navigator.clipboard.writeText(text).catch(() => {
     const ta = document.createElement('textarea');
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
   });
   const btn = document.getElementById('exportBtn');
   btn.textContent = '✓ Copied!';
   btn.className = 'btn-ghost green';
-  setTimeout(() => {
-    btn.textContent = '📋 Copy for CONTEXT.md';
-    btn.className = 'btn-ghost';
-  }, 3000);
+  setTimeout(() => { btn.textContent = '📋 Copy for CONTEXT.md'; btn.className = 'btn-ghost'; }, 3000);
 }
 
-// ── Settings ───────────────────────────────────────────────────────
+// ── Modals ─────────────────────────────────────────────────────────
 function openSettings() {
   document.getElementById('inputTelegramToken').value = state.telegramToken || '';
   document.getElementById('inputTelegramChatId').value = state.telegramChatId || '';
   document.getElementById('settingsModal').classList.add('visible');
 }
 
-function closeSettings() {
-  document.getElementById('settingsModal').classList.remove('visible');
-}
-
 function saveSettings() {
   state.telegramToken = document.getElementById('inputTelegramToken').value.trim();
   state.telegramChatId = document.getElementById('inputTelegramChatId').value.trim();
-  saveState();
-  closeSettings();
+  saveState(); closeModal('settingsModal');
   addLog('Settings saved.', 'success');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('visible');
 }
 
 // ── Tabs ───────────────────────────────────────────────────────────
